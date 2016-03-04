@@ -13,6 +13,6 @@ public class ContactCreateTest extends TestBase {
                 "new.contacta.@testmail.ru",
                 "new contact"));
         app.getContactHelper().submitContactCreate();
-        app.getNavigationHelper().returnToHomePage();
+        app.getNavigationHelper().gotoHomePage();
     }
 }

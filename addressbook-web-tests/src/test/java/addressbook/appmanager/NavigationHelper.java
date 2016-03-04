@@ -3,19 +3,23 @@ package addressbook.appmanager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-public class NavigationHelper {
-
-    FirefoxDriver wd;
+public class NavigationHelper extends BaseHelper {
 
     public NavigationHelper(FirefoxDriver wd) {
-        this.wd = wd;
+        super(wd);
+    }
+
+    public void login(String username, String password) {
+        type(By.name("user"), username);
+        type(By.name("pass"), password);
+        click(By.xpath("//form[@id='LoginForm']/input[3]"));
     }
 
     public void gotoGroupPage() {
-        wd.findElement(By.linkText("groups")).click();
+        click(By.linkText("groups"));
     }
 
-    public void returnToHomePage() {
-        wd.findElement(By.linkText("home")).click();
+    public void gotoHomePage() {
+        click(By.linkText("home"));
     }
 }
