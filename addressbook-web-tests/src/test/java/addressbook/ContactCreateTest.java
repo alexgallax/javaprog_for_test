@@ -37,7 +37,10 @@ public class ContactCreateTest {
     @Test
     public void testContactCreate() {
         initContactCreate();
-        fillContactForms(new ContactData("New", "A", "Contact", "unlocated house", "111-11-11", "new.contacta.@testmail.ru", "new contact"));
+        fillContactForms(new ContactData("New", "A", "Contact",
+                "unlocated house", "111-11-11",
+                "new.contacta.@testmail.ru",
+                "new contact"));
         submitContactCreate();
         returnToHomePage();
     }
