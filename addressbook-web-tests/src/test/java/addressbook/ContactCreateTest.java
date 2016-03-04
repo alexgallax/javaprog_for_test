@@ -16,7 +16,7 @@ public class ContactCreateTest {
     public void setUp() throws Exception {
         wd = new FirefoxDriver();
         wd.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-        gotoContactPage();
+        wd.get("http://localhost/addressbook/");
         login("admin", "secret");
     }
 
@@ -28,10 +28,6 @@ public class ContactCreateTest {
         wd.findElement(By.name("pass")).clear();
         wd.findElement(By.name("pass")).sendKeys(password);
         wd.findElement(By.xpath("//form[@id='LoginForm']/input[3]")).click();
-    }
-
-    private void gotoContactPage() {
-        wd.get("http://localhost/addressbook/");
     }
 
     @Test
