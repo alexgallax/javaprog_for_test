@@ -24,6 +24,18 @@ public class GroupHelper extends BaseHelper {
         type(By.name("group_footer"), groupData.getGroupFooter());
     }
 
+    public void clearGroupForms() {
+        clearForm(By.name("group_name"));
+        clearForm(By.name("group_header"));
+        clearForm(By.name("group_footer"));
+    }
+
+    public void addTextToGroupForms(String text) {
+        addTextToForm(By.name("group_name"), text);
+        addTextToForm(By.name("group_header"), text);
+        addTextToForm(By.name("group_footer"), text);
+    }
+
     public void returnToGroupPage() {
         click(By.linkText("group page"));
     }

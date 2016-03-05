@@ -12,18 +12,29 @@ public class BaseHelper {
         this.wd = wd;
     }
 
-    public boolean checkSelect(By locator) {
+    protected boolean checkSelect(By locator) {
         return wd.findElement(locator).isSelected();
     }
 
-    public void click(By locator) {
+    protected void click(By locator) {
         wd.findElement(locator).click();
     }
 
-    public void type(By locator, String text) {
+    protected void type(By locator, String text) {
+        clearForm(locator);
+        addTextToForm(locator, text);
+    }
+
+    protected void clearForm(By locator) {
         wd.findElement(locator).click();
         wd.findElement(locator).clear();
-        wd.findElement(locator).sendKeys(text);
+    }
+
+    protected void addTextToForm(By locator, String text) {
+        String formText = wd.findElement(locator).getText();
+        String newFormText = formText + text;
+
+        wd.findElement(locator).sendKeys(newFormText);
     }
 
     public void closeAlert() {

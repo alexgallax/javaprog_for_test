@@ -28,6 +28,26 @@ public class ContactHelper extends BaseHelper {
         type(By.name("notes"), contactData.getNotes());
     }
 
+    public void clearContactForms() {
+        clearForm(By.name("firstname"));
+        clearForm(By.name("middlename"));
+        clearForm(By.name("lastname"));
+        clearForm(By.name("address"));
+        clearForm(By.name("mobile"));
+        clearForm(By.name("email"));
+        clearForm(By.name("notes"));
+    }
+
+    public void addTextToContactForms(String text) {
+        addTextToForm(By.name("firstname"), text);
+        addTextToForm(By.name("middlename"), text);
+        addTextToForm(By.name("lastname"), text);
+        addTextToForm(By.name("address"), text);
+        addTextToForm(By.name("mobile"), text);
+        addTextToForm(By.name("email"), text);
+        addTextToForm(By.name("notes"), text);
+    }
+
     public void selectContact() {
         if (!checkSelect(By.name("selected[]"))) {
             click(By.name("selected[]"));
