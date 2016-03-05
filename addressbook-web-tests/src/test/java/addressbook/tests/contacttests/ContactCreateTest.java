@@ -1,6 +1,7 @@
-package addressbook.tests;
+package addressbook.tests.contacttests;
 
 import addressbook.model.ContactData;
+import addressbook.tests.TestBase;
 import org.testng.annotations.Test;
 
 public class ContactCreateTest extends TestBase {

@@ -14,6 +14,10 @@ public class ContactHelper extends BaseHelper {
         click(By.name("submit"));
     }
 
+    public void submitContactModify() {
+        click(By.name("update"));
+    }
+
     public void fillContactForms(ContactData contactData) {
         type(By.name("firstname"), contactData.getFirstName());
         type(By.name("middlename"), contactData.getMiddleName());
@@ -24,7 +28,21 @@ public class ContactHelper extends BaseHelper {
         type(By.name("notes"), contactData.getNotes());
     }
 
+    public void selectContact() {
+        if (!checkSelect(By.name("selected[]"))) {
+            click(By.name("selected[]"));
+        }
+    }
+
     public void initContactCreate() {
         click(By.linkText("add new"));
+    }
+
+    public void initContactDelete() {
+        click(By.xpath("//div[@id='content']/form[2]/div[2]/input"));
+    }
+
+    public void initContactModify() {
+        click(By.xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img"));
     }
 }
