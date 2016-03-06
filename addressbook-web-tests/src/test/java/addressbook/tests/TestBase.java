@@ -4,10 +4,11 @@ import addressbook.appmanager.ApplicationManager;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
-public class TestBase
-{
+import static addressbook.tests.consts.TestConsts.TEST_BROWSER;
 
-    protected final ApplicationManager app = new ApplicationManager();
+public class TestBase {
+
+    protected final ApplicationManager app = new ApplicationManager(TEST_BROWSER);
 
     @BeforeMethod
     public void setUp() throws Exception {
