@@ -1,5 +1,6 @@
 package addressbook.tests.grouptests;
 
+import addressbook.model.GroupData;
 import addressbook.tests.TestBase;
 import org.testng.annotations.Test;
 
@@ -12,6 +13,16 @@ public class GroupModifyTest extends TestBase {
         app.getNavigationHelper().gotoGroupPage();
         app.getGroupHelper().selectGroup();
         app.getGroupHelper().initGroupModify();
+        app.getGroupHelper().submitGroupModify();
+        app.getGroupHelper().returnToGroupPage();
+    }
+
+    @Test
+    public void testGroupModifyFillForms() {
+        app.getNavigationHelper().gotoGroupPage();
+        app.getGroupHelper().selectGroup();
+        app.getGroupHelper().initGroupModify();
+        app.getGroupHelper().fillGroupForms(new GroupData("testgroup", "head", "foot"));
         app.getGroupHelper().submitGroupModify();
         app.getGroupHelper().returnToGroupPage();
     }
