@@ -3,6 +3,8 @@ package addressbook.appmanager;
 import addressbook.model.ContactData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 
 public class ContactHelper extends BaseHelper {
 
@@ -18,7 +20,7 @@ public class ContactHelper extends BaseHelper {
         click(By.name("update"));
     }
 
-    public void fillContactForms(ContactData contactData) {
+    public void fillContactForms(ContactData contactData, boolean create) {
         type(By.name("firstname"), contactData.getFirstName());
         type(By.name("middlename"), contactData.getMiddleName());
         type(By.name("lastname"), contactData.getLastName());
@@ -26,6 +28,12 @@ public class ContactHelper extends BaseHelper {
         type(By.name("mobile"), contactData.getMobile());
         type(By.name("email"), contactData.getEmail());
         type(By.name("notes"), contactData.getNotes());
+
+        if (create) {
+            new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+        } else {
+            Assert.assertFalse(isElementFound(By.name("new_group")));
+        }
     }
 
     public void clearContactForms() {

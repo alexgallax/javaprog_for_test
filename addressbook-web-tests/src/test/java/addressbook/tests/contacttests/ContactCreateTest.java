@@ -10,9 +10,11 @@ public class ContactCreateTest extends TestBase {
     public void testContactCreate() {
         app.getContactHelper().initContactCreate();
         app.getContactHelper().fillContactForms(new ContactData("New", "A", "Contact",
+                "testgroup",
                 "unlocated house", "111-11-11",
                 "new.contacta.@testmail.ru",
-                null));
+                null),
+                true);
         app.getContactHelper().submitContactCreate();
         app.getNavigationHelper().gotoHomePage();
     }

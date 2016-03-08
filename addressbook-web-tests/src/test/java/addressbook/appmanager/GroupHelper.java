@@ -41,7 +41,7 @@ public class GroupHelper extends BaseHelper {
     }
 
     public void selectGroup() {
-        if (!checkSelect(By.name("selected[]"))) {
+        if (! checkSelect(By.name("selected[]"))) {
             click(By.name("selected[]"));
         }
     }
