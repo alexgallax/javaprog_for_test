@@ -21,8 +21,12 @@ public class BaseHelper {
     }
 
     protected void type(By locator, String text) {
-        clearForm(locator);
-        addTextToForm(locator, text);
+        click(locator);
+
+        if (text != null) {
+            clearForm(locator);
+            wd.findElement(locator).sendKeys(text);
+        }
     }
 
     protected void clearForm(By locator) {
@@ -31,7 +35,7 @@ public class BaseHelper {
     }
 
     protected void addTextToForm(By locator, String text) {
-        String formText = wd.findElement(locator).getText();
+        String formText = wd.findElement(locator).getAttribute("value");
         String newFormText = formText + text;
 
         wd.findElement(locator).sendKeys(newFormText);
