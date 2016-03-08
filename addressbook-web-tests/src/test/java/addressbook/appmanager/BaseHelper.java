@@ -24,8 +24,12 @@ public class BaseHelper {
         click(locator);
 
         if (text != null) {
-            clearForm(locator);
-            wd.findElement(locator).sendKeys(text);
+            String existedText = wd.findElement(locator).getAttribute("value");
+
+            if (! existedText.equals(text)) {
+                clearForm(locator);
+                wd.findElement(locator).sendKeys(text);
+            }
         }
     }
 
