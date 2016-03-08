@@ -11,6 +11,10 @@ import static org.openqa.selenium.remote.BrowserType.*;
 
 public class ApplicationManager {
 
+    public static final String ADDRESS = "http://localhost/addressbook/";
+    public static final String LOGIN = "admin";
+    public static final String PASSWORD = "secret";
+
     WebDriver wd;
 
     private String browser;
@@ -31,13 +35,13 @@ public class ApplicationManager {
             wd = new InternetExplorerDriver();
         }
         wd.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-        wd.get("http://localhost/addressbook/");
+        wd.get(ADDRESS);
 
         navigationHelper = new NavigationHelper(wd);
         groupHelper = new GroupHelper(wd);
         contactHelper = new ContactHelper(wd);
 
-        navigationHelper.login("admin", "secret");
+        navigationHelper.login(LOGIN, PASSWORD);
     }
 
     public void stop() {
