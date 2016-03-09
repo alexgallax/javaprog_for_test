@@ -2,6 +2,7 @@ package addressbook.appmanager;
 
 import addressbook.model.ContactData;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
@@ -30,7 +31,9 @@ public class ContactHelper extends BaseHelper {
         type(By.name("notes"), contactData.getNotes());
 
         if (create) {
-            new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+            if (contactData.getGroup() != null) {
+                new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+            }
         } else {
             Assert.assertFalse(isElementFound(By.name("new_group")));
         }
@@ -72,5 +75,29 @@ public class ContactHelper extends BaseHelper {
 
     public void initContactModify() {
         click(By.xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img"));
+    }
+
+    public boolean isContactsFound() {
+        try {
+            String contactsNumber = wd.findElement(By.id("search_count")).getText();
+            return (! contactsNumber.equals("0"));
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
+
+    public void createContact(ContactData contact, boolean create) {
+        initContactCreate();
+        fillContactForms(contact, create);
+        submitContactCreate();
+    }
+
+    public boolean checkGroupForContact(String groupName) {
+        try {
+            new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(groupName);
+            return true;
+        } catch (NoSuchElementException e) {
+            return false;
+        }
     }
 }

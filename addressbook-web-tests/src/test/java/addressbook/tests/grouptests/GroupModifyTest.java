@@ -2,15 +2,24 @@ package addressbook.tests.grouptests;
 
 import addressbook.model.GroupData;
 import addressbook.tests.TestBase;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import static addressbook.tests.consts.TestConsts.*;
 
 public class GroupModifyTest extends TestBase {
 
+    @BeforeMethod
+    public void gotoGroupPageAndCheckInit() {
+        app.getNavigationHelper().gotoGroupPage();
+
+        if (! app.getGroupHelper().isGroupsFound()) {
+            app.getGroupHelper().createGroup(new GroupData("testgroup", null, null));
+        }
+    }
+
     @Test
     public void testGroupModifyNoEdit() {
-        app.getNavigationHelper().gotoGroupPage();
         app.getGroupHelper().selectGroup();
         app.getGroupHelper().initGroupModify();
         app.getGroupHelper().submitGroupModify();
@@ -19,7 +28,6 @@ public class GroupModifyTest extends TestBase {
 
     @Test
     public void testGroupModifyFillForms() {
-        app.getNavigationHelper().gotoGroupPage();
         app.getGroupHelper().selectGroup();
         app.getGroupHelper().initGroupModify();
         app.getGroupHelper().fillGroupForms(new GroupData("testgroup", "head", "foot"));
@@ -29,7 +37,6 @@ public class GroupModifyTest extends TestBase {
 
     @Test
     public void testGroupModifyEditForms() {
-        app.getNavigationHelper().gotoGroupPage();
         app.getGroupHelper().selectGroup();
         app.getGroupHelper().initGroupModify();
         app.getGroupHelper().addTextToGroupForms(TEXT_ADDED_TO_FORM);
@@ -39,7 +46,6 @@ public class GroupModifyTest extends TestBase {
 
     @Test
     public void testGroupModifyClearForms() {
-        app.getNavigationHelper().gotoGroupPage();
         app.getGroupHelper().selectGroup();
         app.getGroupHelper().initGroupModify();
         app.getGroupHelper().clearGroupForms();
