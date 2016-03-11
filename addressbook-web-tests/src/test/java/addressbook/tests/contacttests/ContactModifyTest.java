@@ -15,11 +15,10 @@ public class ContactModifyTest extends TestBase {
 
         if (! app.getContactHelper().isContactsFound()) {
             app.getContactHelper().createContact(new ContactData("New", "A", "Contact",
-                            null,
-                            "unlocated house", "111-11-11",
-                            "new.contacta.@testmail.ru",
-                            null),
-                    true);
+                    null,
+                    "unlocated house", "111-11-11",
+                    "new.contacta.@testmail.ru",
+                    null));
             app.getNavigationHelper().gotoHomePage();
         }
     }

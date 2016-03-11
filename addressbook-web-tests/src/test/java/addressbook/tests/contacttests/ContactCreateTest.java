@@ -26,11 +26,10 @@ public class ContactCreateTest extends TestBase {
     @Test
     public void testContactCreate() {
         app.getContactHelper().createContact(new ContactData("New", "A", "Contact",
-                        GROUP_NAME,
-                        "unlocated house", "111-11-11",
-                        "new.contacta.@testmail.ru",
-                        null),
-                true);
+                GROUP_NAME,
+                "unlocated house", "111-11-11",
+                "new.contacta.@testmail.ru",
+                null));
         app.getNavigationHelper().gotoHomePage();
     }
 }
