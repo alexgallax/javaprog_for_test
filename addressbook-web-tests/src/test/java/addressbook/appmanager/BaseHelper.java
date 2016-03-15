@@ -40,10 +40,9 @@ public class BaseHelper {
     }
 
     protected void addTextToForm(By locator, String text) {
-        String formText = wd.findElement(locator).getAttribute("value");
-        String newFormText = formText + text;
+        click(locator);
 
-        wd.findElement(locator).sendKeys(newFormText);
+        wd.findElement(locator).sendKeys(text);
     }
 
     public void closeAlert() {
