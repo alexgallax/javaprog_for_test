@@ -39,6 +39,8 @@ public class GroupModifyTest extends TestBase {
         app.getGroupHelper().initGroupModify();
         app.getGroupHelper().submitGroupModify();
         app.getGroupHelper().returnToGroupPage();
+
+        makeChecks();
     }
 
     @Test
@@ -51,6 +53,8 @@ public class GroupModifyTest extends TestBase {
         app.getGroupHelper().fillGroupForms(group);
         app.getGroupHelper().submitGroupModify();
         app.getGroupHelper().returnToGroupPage();
+
+        makeChecks();
     }
 
     @Test
@@ -58,14 +62,16 @@ public class GroupModifyTest extends TestBase {
         groupIndex = before.size() - 1;
         group = new GroupData(before.get(groupIndex).getId(),
                 (before.get(groupIndex).getGroupName() + TEXT_ADDED_TO_FORM),
-                (before.get(groupIndex).getGroupHeader() + TEXT_ADDED_TO_FORM),
-                (before.get(groupIndex).getGroupFooter() + TEXT_ADDED_TO_FORM));
+                null,
+                null);
 
         app.getGroupHelper().selectGroup(groupIndex);
         app.getGroupHelper().initGroupModify();
         app.getGroupHelper().addTextToGroupForms(TEXT_ADDED_TO_FORM);
         app.getGroupHelper().submitGroupModify();
         app.getGroupHelper().returnToGroupPage();
+
+        makeChecks();
     }
 
     @Test
@@ -78,10 +84,11 @@ public class GroupModifyTest extends TestBase {
         app.getGroupHelper().clearGroupForms();
         app.getGroupHelper().submitGroupModify();
         app.getGroupHelper().returnToGroupPage();
+
+        makeChecks();
     }
 
-    @AfterMethod
-    public void makeChecks() {
+    private void makeChecks() {
         List<GroupData> after = app.getGroupHelper().getGroupList();
 
         Assert.assertEquals(after.size(), before.size());

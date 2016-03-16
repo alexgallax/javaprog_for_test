@@ -2,10 +2,17 @@ package addressbook.tests.contacttests;
 
 import addressbook.model.ContactData;
 import addressbook.tests.TestBase;
+import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.util.List;
+
 public class ContactDeleteTest extends TestBase {
+
+    private List<ContactData> before;
+    private int contactIndex;
 
     @BeforeMethod
     public void gotoContactPageAndCheckInit() {
@@ -19,13 +26,29 @@ public class ContactDeleteTest extends TestBase {
                     null));
             app.getNavigationHelper().gotoHomePage();
         }
+
+        before = app.getContactHelper().getContactList();
     }
 
     @Test
     public void testContactDelete() {
-        app.getContactHelper().selectContact();
+        contactIndex = before.size() - 1;
+
+        app.getContactHelper().selectContact(contactIndex);
         app.getContactHelper().initContactDelete();
         app.getContactHelper().closeAlert();
         app.getNavigationHelper().gotoHomePage();
+
+        makeChecks();
+    }
+
+    private void makeChecks() {
+        List<ContactData> after = app.getContactHelper().getContactList();
+
+        Assert.assertEquals(after.size(), before.size() - 1);
+
+        before.remove(contactIndex);
+
+        Assert.assertEquals(after, before);
     }
 }

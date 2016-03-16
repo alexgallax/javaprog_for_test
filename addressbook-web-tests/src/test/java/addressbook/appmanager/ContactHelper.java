@@ -4,8 +4,12 @@ import addressbook.model.ContactData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ContactHelper extends BaseHelper {
 
@@ -59,10 +63,8 @@ public class ContactHelper extends BaseHelper {
         addTextToForm(By.name("notes"), text);
     }
 
-    public void selectContact() {
-        if (!checkSelect(By.name("selected[]"))) {
-            click(By.name("selected[]"));
-        }
+    public void selectContact(int index) {
+        wd.findElements(By.name("selected[]")).get(index).click();
     }
 
     public void initContactCreate() {
@@ -73,8 +75,8 @@ public class ContactHelper extends BaseHelper {
         click(By.xpath("//div[@id='content']/form[2]/div[2]/input"));
     }
 
-    public void initContactModify() {
-        click(By.xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img"));
+    public void initContactModify(int index) {
+        wd.findElements(By.xpath("//a/img[@title='Edit']")).get(index).click();
     }
 
     public boolean isContactsFound() {
@@ -99,5 +101,30 @@ public class ContactHelper extends BaseHelper {
         } catch (NoSuchElementException e) {
             return false;
         }
+    }
+
+    public List<ContactData> getContactList() {
+        List<ContactData> contacts = new ArrayList<ContactData>();
+        List<WebElement> elements = wd.findElements(By.name(("entry")));
+
+        for (WebElement element : elements) {
+            String lastName = element.findElements(By.tagName("td")).get(1).getText();
+            String firstName = element.findElements(By.tagName("td")).get(2).getText();
+            String address = element.findElements(By.tagName("td")).get(3).getText();
+            String email = element.findElements(By.tagName("td")).get(4).getText();
+            String mobile = element.findElements(By.tagName("td")).get(5).getText();
+
+            int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
+
+            ContactData contact = new ContactData(id, firstName, null, lastName,
+                    null,
+                    address, mobile,
+                    email,
+                    null);
+
+            contacts.add(contact);
+        }
+
+        return contacts;
     }
 }

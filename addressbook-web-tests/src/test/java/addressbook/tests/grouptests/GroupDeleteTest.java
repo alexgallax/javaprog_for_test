@@ -32,10 +32,11 @@ public class GroupDeleteTest extends TestBase {
         app.getGroupHelper().selectGroup(groupIndex);
         app.getGroupHelper().initGroupDelete();
         app.getGroupHelper().returnToGroupPage();
+
+        makeChecks();
     }
 
-    @AfterMethod
-    public void makeChecks() {
+    private void makeChecks() {
         List<GroupData> after = app.getGroupHelper().getGroupList();
 
         Assert.assertEquals(after.size(), before.size() - 1);

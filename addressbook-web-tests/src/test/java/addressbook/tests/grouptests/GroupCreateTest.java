@@ -27,10 +27,11 @@ public class GroupCreateTest extends TestBase {
         group = new GroupData("testgroup", null, null);
 
         app.getGroupHelper().createGroup(group);
+
+        makeChecks();
     }
 
-    @AfterMethod
-    public void makeChecks() {
+    private void makeChecks() {
         List<GroupData> after = app.getGroupHelper().getGroupList();
 
         Assert.assertEquals(after.size(), before.size() + 1);
