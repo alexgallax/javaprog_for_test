@@ -15,7 +15,7 @@ public class NavigationHelper extends BaseHelper {
         click(By.xpath("//form[@id='LoginForm']/input[3]"));
     }
 
-    public void gotoGroupPage() {
+    public void groupPage() {
         if (isElementFound(By.tagName("h1"))
                 && wd.findElement(By.tagName("h1")).getText().equals("Groups")
                 && isElementFound(By.name("new"))) {

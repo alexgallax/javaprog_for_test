@@ -3,7 +3,6 @@ package addressbook.tests.grouptests;
 import addressbook.model.GroupData;
 import addressbook.tests.TestBase;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -17,22 +16,22 @@ public class GroupCreateTest extends TestBase {
 
     @BeforeMethod
     public void gotoGroupPageAndCheckInit() {
-        app.getNavigationHelper().gotoGroupPage();
+        app.goTo().groupPage();
 
-        before = app.getGroupHelper().getGroupList();
+        before = app.group().list();
     }
 
     @Test
     public void testGroupCreate() {
         group = new GroupData("testgroup", null, null);
 
-        app.getGroupHelper().createGroup(group);
+        app.group().create(group);
 
         makeChecks();
     }
 
     private void makeChecks() {
-        List<GroupData> after = app.getGroupHelper().getGroupList();
+        List<GroupData> after = app.group().list();
 
         Assert.assertEquals(after.size(), before.size() + 1);
 

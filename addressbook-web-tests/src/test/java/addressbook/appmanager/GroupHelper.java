@@ -64,14 +64,51 @@ public class GroupHelper extends BaseHelper {
         return isElementFound(By.name("selected[]"));
     }
 
-    public void createGroup(GroupData group) {
+    public void create(GroupData group) {
         initGroupCreate();
         fillGroupForms(group);
         submitGroupCreate();
         returnToGroupPage();
     }
 
-    public List<GroupData> getGroupList() {
+    public void delete(int index) {
+        selectGroup(index);
+        initGroupDelete();
+        returnToGroupPage();
+    }
+
+    public void modify(int index, GroupData group) {
+        selectGroup(index);
+        initGroupModify();
+        fillGroupForms(group);
+        submitGroupModify();
+        returnToGroupPage();
+    }
+
+    public void noEdit(int index) {
+        selectGroup(index);
+        initGroupModify();
+        submitGroupModify();
+        returnToGroupPage();
+    }
+
+    public void edit(int index, String text) {
+        selectGroup(index);
+        initGroupModify();
+        addTextToGroupForms(text);
+        submitGroupModify();
+        returnToGroupPage();
+    }
+
+    public void clear(int index) {
+        selectGroup(index);
+        initGroupModify();
+        clearGroupForms();
+        submitGroupModify();
+        returnToGroupPage();
+    }
+
+    public List<GroupData> list() {
         List<GroupData> groups = new ArrayList<GroupData>();
         List<WebElement> elements = wd.findElements(By.cssSelector("span.group"));
 

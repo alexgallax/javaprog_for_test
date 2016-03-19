@@ -4,7 +4,6 @@ import addressbook.model.ContactData;
 import addressbook.model.GroupData;
 import addressbook.tests.TestBase;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -20,17 +19,17 @@ public class ContactCreateTest extends TestBase {
 
     @BeforeMethod
     public void checkGroupForContactPresent() {
-        app.getNavigationHelper().gotoHomePage();
-        app.getContactHelper().initContactCreate();
+        app.goTo().gotoHomePage();
+        app.contact().initContactCreate();
 
-        if (! app.getContactHelper().checkGroupForContact(GROUP_NAME)) {
-            app.getNavigationHelper().gotoGroupPage();
-            app.getGroupHelper().createGroup(new GroupData(GROUP_NAME, null, null));
+        if (! app.contact().checkGroupForContact(GROUP_NAME)) {
+            app.goTo().groupPage();
+            app.group().create(new GroupData(GROUP_NAME, null, null));
         }
 
-        app.getNavigationHelper().gotoHomePage();
+        app.goTo().gotoHomePage();
 
-        before = app.getContactHelper().getContactList();
+        before = app.contact().list();
     }
 
     @Test
@@ -41,14 +40,14 @@ public class ContactCreateTest extends TestBase {
                 "new.contacta.@testmail.ru",
                 null);
 
-        app.getContactHelper().createContact(contact);
-        app.getNavigationHelper().gotoHomePage();
+        app.contact().create(contact);
+        app.goTo().gotoHomePage();
 
         makeChecks();
     }
 
     private void makeChecks() {
-        List<ContactData> after = app.getContactHelper().getContactList();
+        List<ContactData> after = app.contact().list();
 
         Assert.assertEquals(after.size(), before.size() + 1);
 

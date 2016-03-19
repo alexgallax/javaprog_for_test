@@ -88,10 +88,39 @@ public class ContactHelper extends BaseHelper {
         }
     }
 
-    public void createContact(ContactData contact) {
+    public void create(ContactData contact) {
         initContactCreate();
         fillContactForms(contact, true);
         submitContactCreate();
+    }
+
+    public void delete(int index) {
+        selectContact(index);
+        initContactDelete();
+        closeAlert();
+    }
+
+    public void modify(int index, ContactData contact) {
+        initContactModify(index);
+        fillContactForms(contact, false);
+        submitContactModify();
+    }
+
+    public void noEdit(int index) {
+        initContactModify(index);
+        submitContactModify();
+    }
+
+    public void edit(int index, String text) {
+        initContactModify(index);
+        addTextToContactForms(text);
+        submitContactModify();
+    }
+
+    public void clear(int index) {
+        initContactModify(index);
+        clearContactForms();
+        submitContactModify();
     }
 
     public boolean checkGroupForContact(String groupName) {
@@ -103,7 +132,7 @@ public class ContactHelper extends BaseHelper {
         }
     }
 
-    public List<ContactData> getContactList() {
+    public List<ContactData> list() {
         List<ContactData> contacts = new ArrayList<ContactData>();
         List<WebElement> elements = wd.findElements(By.name(("entry")));
 

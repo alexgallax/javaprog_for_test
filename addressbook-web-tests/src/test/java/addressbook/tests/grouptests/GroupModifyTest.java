@@ -3,11 +3,9 @@ package addressbook.tests.grouptests;
 import addressbook.model.GroupData;
 import addressbook.tests.TestBase;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -21,13 +19,13 @@ public class GroupModifyTest extends TestBase {
 
     @BeforeMethod
     public void gotoGroupPageAndCheckInit() {
-        app.getNavigationHelper().gotoGroupPage();
+        app.goTo().groupPage();
 
-        if (! app.getGroupHelper().isGroupsFound()) {
-            app.getGroupHelper().createGroup(new GroupData("testgroup", null, null));
+        if (! app.group().isGroupsFound()) {
+            app.group().create(new GroupData("testgroup", null, null));
         }
 
-        before = app.getGroupHelper().getGroupList();
+        before = app.group().list();
     }
 
     @Test
@@ -35,10 +33,7 @@ public class GroupModifyTest extends TestBase {
         groupIndex = 0;
         group = before.get(groupIndex);
 
-        app.getGroupHelper().selectGroup(groupIndex);
-        app.getGroupHelper().initGroupModify();
-        app.getGroupHelper().submitGroupModify();
-        app.getGroupHelper().returnToGroupPage();
+        app.group().noEdit(groupIndex);
 
         makeChecks();
     }
@@ -48,11 +43,7 @@ public class GroupModifyTest extends TestBase {
         groupIndex = before.size() - 1;
         group = new GroupData(before.get(groupIndex).getId(), "testgroup", "head", "foot");
 
-        app.getGroupHelper().selectGroup(groupIndex);
-        app.getGroupHelper().initGroupModify();
-        app.getGroupHelper().fillGroupForms(group);
-        app.getGroupHelper().submitGroupModify();
-        app.getGroupHelper().returnToGroupPage();
+        app.group().modify(groupIndex, group);
 
         makeChecks();
     }
@@ -65,11 +56,7 @@ public class GroupModifyTest extends TestBase {
                 null,
                 null);
 
-        app.getGroupHelper().selectGroup(groupIndex);
-        app.getGroupHelper().initGroupModify();
-        app.getGroupHelper().addTextToGroupForms(TEXT_ADDED_TO_FORM);
-        app.getGroupHelper().submitGroupModify();
-        app.getGroupHelper().returnToGroupPage();
+        app.group().edit(groupIndex, TEXT_ADDED_TO_FORM);
 
         makeChecks();
     }
@@ -79,17 +66,13 @@ public class GroupModifyTest extends TestBase {
         groupIndex = 0;
         group = new GroupData(before.get(groupIndex).getId(), "", "", "");
 
-        app.getGroupHelper().selectGroup(groupIndex);
-        app.getGroupHelper().initGroupModify();
-        app.getGroupHelper().clearGroupForms();
-        app.getGroupHelper().submitGroupModify();
-        app.getGroupHelper().returnToGroupPage();
+        app.group().clear(groupIndex);
 
         makeChecks();
     }
 
     private void makeChecks() {
-        List<GroupData> after = app.getGroupHelper().getGroupList();
+        List<GroupData> after = app.group().list();
 
         Assert.assertEquals(after.size(), before.size());
 

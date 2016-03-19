@@ -3,7 +3,6 @@ package addressbook.tests.contacttests;
 import addressbook.model.ContactData;
 import addressbook.tests.TestBase;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -20,18 +19,18 @@ public class ContactModifyTest extends TestBase {
 
     @BeforeMethod
     public void gotoContactPageAndCheckInit() {
-        app.getNavigationHelper().gotoHomePage();
+        app.goTo().gotoHomePage();
 
-        if (! app.getContactHelper().isContactsFound()) {
-            app.getContactHelper().createContact(new ContactData("New", "A", "Contact",
+        if (! app.contact().isContactsFound()) {
+            app.contact().create(new ContactData("New", "A", "Contact",
                     null,
                     "unlocated house", "111-11-11",
                     "new.contacta.@testmail.ru",
                     null));
-            app.getNavigationHelper().gotoHomePage();
+            app.goTo().gotoHomePage();
         }
 
-        before = app.getContactHelper().getContactList();
+        before = app.contact().list();
     }
 
     @Test
@@ -39,9 +38,8 @@ public class ContactModifyTest extends TestBase {
         contactIndex = 0;
         contact = before.get(contactIndex);
 
-        app.getContactHelper().initContactModify(contactIndex);
-        app.getContactHelper().submitContactModify();
-        app.getNavigationHelper().gotoHomePage();
+        app.contact().noEdit(contactIndex);
+        app.goTo().gotoHomePage();
 
         makeChecks();
     }
@@ -55,10 +53,8 @@ public class ContactModifyTest extends TestBase {
                 "new.contacta.@testmail.ru",
                 null);
 
-        app.getContactHelper().initContactModify(contactIndex);
-        app.getContactHelper().fillContactForms(contact, false);
-        app.getContactHelper().submitContactModify();
-        app.getNavigationHelper().gotoHomePage();
+        app.contact().modify(contactIndex, contact);
+        app.goTo().gotoHomePage();
 
         makeChecks();
     }
@@ -76,10 +72,8 @@ public class ContactModifyTest extends TestBase {
                 before.get(contactIndex).getEmail() + TEXT_ADDED_TO_FORM,
                 null);
 
-        app.getContactHelper().initContactModify(contactIndex);
-        app.getContactHelper().addTextToContactForms(TEXT_ADDED_TO_FORM);
-        app.getContactHelper().submitContactModify();
-        app.getNavigationHelper().gotoHomePage();
+        app.contact().edit(contactIndex, TEXT_ADDED_TO_FORM);
+        app.goTo().gotoHomePage();
 
         makeChecks();
     }
@@ -89,16 +83,14 @@ public class ContactModifyTest extends TestBase {
         contactIndex = 0;
         contact = new ContactData(before.get(contactIndex).getId(), "", "", "", "", "", "", "", "");
 
-        app.getContactHelper().initContactModify(contactIndex);
-        app.getContactHelper().clearContactForms();
-        app.getContactHelper().submitContactModify();
-        app.getNavigationHelper().gotoHomePage();
+        app.contact().clear(contactIndex);
+        app.goTo().gotoHomePage();
 
         makeChecks();
     }
 
     private void makeChecks() {
-        List<ContactData> after = app.getContactHelper().getContactList();
+        List<ContactData> after = app.contact().list();
 
         Assert.assertEquals(after.size(), before.size());
 
