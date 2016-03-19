@@ -9,7 +9,9 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ContactHelper extends BaseHelper {
 
@@ -63,8 +65,8 @@ public class ContactHelper extends BaseHelper {
         addTextToForm(By.name("notes"), text);
     }
 
-    public void selectContact(int index) {
-        wd.findElements(By.name("selected[]")).get(index).click();
+    private void selectContactById(int id) {
+        wd.findElement(By.cssSelector("input[value='" + id + "']")).click();
     }
 
     public void initContactCreate() {
@@ -75,8 +77,8 @@ public class ContactHelper extends BaseHelper {
         click(By.xpath("//div[@id='content']/form[2]/div[2]/input"));
     }
 
-    public void initContactModify(int index) {
-        wd.findElements(By.xpath("//a/img[@title='Edit']")).get(index).click();
+    public void initContactModifyById(int id) {
+        wd.findElement(By.cssSelector("a[href='edit.php?id=" + id + "']")).click();
     }
 
     public boolean isContactsFound() {
@@ -94,31 +96,31 @@ public class ContactHelper extends BaseHelper {
         submitContactCreate();
     }
 
-    public void delete(int index) {
-        selectContact(index);
+    public void delete(ContactData contact) {
+        selectContactById(contact.getId());
         initContactDelete();
         closeAlert();
     }
 
-    public void modify(int index, ContactData contact) {
-        initContactModify(index);
+    public void modify(ContactData contact) {
+        initContactModifyById(contact.getId());
         fillContactForms(contact, false);
         submitContactModify();
     }
 
-    public void noEdit(int index) {
-        initContactModify(index);
+    public void noEdit(ContactData contact) {
+        initContactModifyById(contact.getId());
         submitContactModify();
     }
 
-    public void edit(int index, String text) {
-        initContactModify(index);
+    public void edit(ContactData contact, String text) {
+        initContactModifyById(contact.getId());
         addTextToContactForms(text);
         submitContactModify();
     }
 
-    public void clear(int index) {
-        initContactModify(index);
+    public void clear(ContactData contact) {
+        initContactModifyById(contact.getId());
         clearContactForms();
         submitContactModify();
     }
@@ -154,6 +156,31 @@ public class ContactHelper extends BaseHelper {
                     .withEmail(email);
 
             contacts.add(contact);
+        }
+
+        return contacts;
+    }
+
+    public Set<ContactData> all() {
+        Set<ContactData> contacts = new HashSet<>();
+        List<WebElement> elements = wd.findElements(By.name(("entry")));
+
+        for (WebElement element : elements) {
+            String lastName = element.findElements(By.tagName("td")).get(1).getText();
+            String firstName = element.findElements(By.tagName("td")).get(2).getText();
+            String address = element.findElements(By.tagName("td")).get(3).getText();
+            String email = element.findElements(By.tagName("td")).get(4).getText();
+            String mobile = element.findElements(By.tagName("td")).get(5).getText();
+
+            int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
+
+            contacts.add(new ContactData()
+                    .withId(id)
+                    .withFirstName(firstName)
+                    .withLastName(lastName)
+                    .withAddress(address)
+                    .withMobile(mobile)
+                    .withEmail(email));
         }
 
         return contacts;

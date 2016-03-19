@@ -6,15 +6,14 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.util.Comparator;
-import java.util.List;
+import java.util.Set;
 
 import static addressbook.tests.consts.TestConsts.TEXT_ADDED_TO_FORM;
 
 public class ContactModifyTest extends TestBase {
 
-    private List<ContactData> before;
-    private int contactIndex;
+    private Set<ContactData> before;
+    private ContactData modifiedContact;
     private ContactData contact;
 
     @BeforeMethod
@@ -32,15 +31,16 @@ public class ContactModifyTest extends TestBase {
             app.goTo().gotoHomePage();
         }
 
-        before = app.contact().list();
+        before = app.contact().all();
+
+        modifiedContact = before.iterator().next();
     }
 
     @Test
     public void testContactModifyNoEdit() {
-        contactIndex = 0;
-        contact = before.get(contactIndex);
+        contact = modifiedContact;
 
-        app.contact().noEdit(contactIndex);
+        app.contact().noEdit(contact);
         app.goTo().gotoHomePage();
 
         makeChecks();
@@ -48,9 +48,8 @@ public class ContactModifyTest extends TestBase {
 
     @Test
     public void testContactModifyFillForms() {
-        contactIndex = before.size() - 1;
         contact = new ContactData()
-                .withId(before.get(contactIndex).getId())
+                .withId(modifiedContact.getId())
                 .withFirstName("New")
                 .withMiddleName("A")
                 .withLastName("Contact")
@@ -58,7 +57,7 @@ public class ContactModifyTest extends TestBase {
                 .withMobile("111-11-11")
                 .withEmail("new.contacta.@testmail.ru");
 
-        app.contact().modify(contactIndex, contact);
+        app.contact().modify(contact);
         app.goTo().gotoHomePage();
 
         makeChecks();
@@ -66,16 +65,15 @@ public class ContactModifyTest extends TestBase {
 
     @Test
     public void testContactModifyEditForms() {
-        contactIndex = before.size() - 1;
         contact = new ContactData()
-                .withId(before.get(contactIndex).getId())
-                .withFirstName(before.get(contactIndex).getFirstName() + TEXT_ADDED_TO_FORM)
-                .withLastName(before.get(contactIndex).getLastName() + TEXT_ADDED_TO_FORM)
-                .withAddress(before.get(contactIndex).getAddress() + TEXT_ADDED_TO_FORM)
-                .withMobile(before.get(contactIndex).getMobile() + TEXT_ADDED_TO_FORM)
-                .withEmail(before.get(contactIndex).getEmail() + TEXT_ADDED_TO_FORM);
+                .withId(modifiedContact.getId())
+                .withFirstName(modifiedContact.getFirstName() + TEXT_ADDED_TO_FORM)
+                .withLastName(modifiedContact.getLastName() + TEXT_ADDED_TO_FORM)
+                .withAddress(modifiedContact.getAddress() + TEXT_ADDED_TO_FORM)
+                .withMobile(modifiedContact.getMobile() + TEXT_ADDED_TO_FORM)
+                .withEmail(modifiedContact.getEmail() + TEXT_ADDED_TO_FORM);
 
-        app.contact().edit(contactIndex, TEXT_ADDED_TO_FORM);
+        app.contact().edit(contact, TEXT_ADDED_TO_FORM);
         app.goTo().gotoHomePage();
 
         makeChecks();
@@ -83,9 +81,8 @@ public class ContactModifyTest extends TestBase {
 
     @Test
     public void testContactModifyClearForms() {
-        contactIndex = 0;
         contact = new ContactData()
-                .withId(before.get(contactIndex).getId())
+                .withId(modifiedContact.getId())
                 .withFirstName("")
                 .withMiddleName("")
                 .withLastName("")
@@ -93,23 +90,19 @@ public class ContactModifyTest extends TestBase {
                 .withMobile("")
                 .withEmail("");
 
-        app.contact().clear(contactIndex);
+        app.contact().clear(contact);
         app.goTo().gotoHomePage();
 
         makeChecks();
     }
 
     private void makeChecks() {
-        List<ContactData> after = app.contact().list();
+        Set<ContactData> after = app.contact().all();
 
         Assert.assertEquals(after.size(), before.size());
 
-        before.remove(contactIndex);
+        before.remove(modifiedContact);
         before.add(contact);
-
-        Comparator<? super ContactData> byId = (c1, c2) -> Integer.compare(c1.getId(), c2.getId());
-        before.sort(byId);
-        after.sort(byId);
 
         Assert.assertEquals(after, before);
     }

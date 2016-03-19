@@ -7,11 +7,12 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.List;
+import java.util.Set;
 
 public class GroupDeleteTest extends TestBase {
 
-    private List<GroupData> before;
-    private int groupIndex;
+    private Set<GroupData> before;
+    private GroupData group;
 
     @BeforeMethod
     public void gotoGroupPageAndCheckInit() {
@@ -22,24 +23,24 @@ public class GroupDeleteTest extends TestBase {
                     .withName("testgroup"));
         }
 
-        before = app.group().list();
+        before = app.group().all();
     }
 
     @Test
     public void testGroupDelete() {
-        groupIndex = before.size() - 1;
+        group = before.iterator().next();
 
-        app.group().delete(groupIndex);
+        app.group().delete(group);
 
         makeChecks();
     }
 
     private void makeChecks() {
-        List<GroupData> after = app.group().list();
+        Set<GroupData> after = app.group().all();
 
         Assert.assertEquals(after.size(), before.size() - 1);
 
-        before.remove(groupIndex);
+        before.remove(group);
 
         Assert.assertEquals(after, before);
     }

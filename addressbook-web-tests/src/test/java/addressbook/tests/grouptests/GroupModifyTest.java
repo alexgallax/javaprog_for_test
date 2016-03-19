@@ -8,13 +8,14 @@ import org.testng.annotations.Test;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 
 import static addressbook.tests.consts.TestConsts.*;
 
 public class GroupModifyTest extends TestBase {
 
-    private List<GroupData> before;
-    private int groupIndex;
+    private Set<GroupData> before;
+    private GroupData modifiedGroup;
     private GroupData group;
 
     @BeforeMethod
@@ -26,69 +27,63 @@ public class GroupModifyTest extends TestBase {
                     .withName("testgroup"));
         }
 
-        before = app.group().list();
+        before = app.group().all();
+        modifiedGroup = before.iterator().next();
     }
 
     @Test
     public void testGroupModifyNoEdit() {
-        groupIndex = 0;
-        group = before.get(groupIndex);
+        group = modifiedGroup;
 
-        app.group().noEdit(groupIndex);
+        app.group().noEdit(group);
 
         makeChecks();
     }
 
     @Test
     public void testGroupModifyFillForms() {
-        groupIndex = before.size() - 1;
         group = new GroupData()
-                .withId(before.get(groupIndex).getId()).withName("testgroup")
+                .withId(modifiedGroup.getId())
+                .withName("testgroup")
                 .withHeader("head")
                 .withFooter("foot");
 
-        app.group().modify(groupIndex, group);
+        app.group().modify(group);
 
         makeChecks();
     }
 
     @Test
     public void testGroupModifyEditForms() {
-        groupIndex = before.size() - 1;
         group = new GroupData()
-                .withId(before.get(groupIndex).getId())
-                .withName(before.get(groupIndex).getGroupName() + TEXT_ADDED_TO_FORM);
+                .withId(modifiedGroup.getId())
+                .withName(modifiedGroup.getGroupName() + TEXT_ADDED_TO_FORM);
 
-        app.group().edit(groupIndex, TEXT_ADDED_TO_FORM);
+        app.group().edit(group, TEXT_ADDED_TO_FORM);
 
         makeChecks();
     }
 
     @Test
     public void testGroupModifyClearForms() {
-        groupIndex = 0;
         group = new GroupData()
-                .withId(before.get(groupIndex).getId())
+                .withId(modifiedGroup.getId())
                 .withName("")
                 .withHeader("")
                 .withFooter("");
 
-        app.group().clear(groupIndex);
+        app.group().clear(group);
 
         makeChecks();
     }
 
     private void makeChecks() {
-        List<GroupData> after = app.group().list();
+        Set<GroupData> after = app.group().all();
 
         Assert.assertEquals(after.size(), before.size());
 
-        before.remove(groupIndex);
+        before.remove(modifiedGroup);
         before.add(group);
-
-        Comparator<? super GroupData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
-        before.sort(byId);
-        after.sort(byId);
 
         Assert.assertEquals(after, before);
     }

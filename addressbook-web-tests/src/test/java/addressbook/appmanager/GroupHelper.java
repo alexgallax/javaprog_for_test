@@ -6,7 +6,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class GroupHelper extends BaseHelper {
 
@@ -44,8 +46,8 @@ public class GroupHelper extends BaseHelper {
         click(By.linkText("group page"));
     }
 
-    public void selectGroup(int index) {
-        wd.findElements(By.name("selected[]")).get(index).click();
+    private void selectGroupById(int id) {
+        wd.findElement(By.cssSelector("input[value='" + id + "']")).click();
     }
 
     public void initGroupCreate() {
@@ -71,37 +73,37 @@ public class GroupHelper extends BaseHelper {
         returnToGroupPage();
     }
 
-    public void delete(int index) {
-        selectGroup(index);
+    public void delete(GroupData group) {
+        selectGroupById(group.getId());
         initGroupDelete();
         returnToGroupPage();
     }
 
-    public void modify(int index, GroupData group) {
-        selectGroup(index);
+    public void modify(GroupData group) {
+        selectGroupById(group.getId());
         initGroupModify();
         fillGroupForms(group);
         submitGroupModify();
         returnToGroupPage();
     }
 
-    public void noEdit(int index) {
-        selectGroup(index);
+    public void noEdit(GroupData group) {
+        selectGroupById(group.getId());
         initGroupModify();
         submitGroupModify();
         returnToGroupPage();
     }
 
-    public void edit(int index, String text) {
-        selectGroup(index);
+    public void edit(GroupData group, String text) {
+        selectGroupById(group.getId());
         initGroupModify();
         addTextToGroupForms(text);
         submitGroupModify();
         returnToGroupPage();
     }
 
-    public void clear(int index) {
-        selectGroup(index);
+    public void clear(GroupData group) {
+        selectGroupById(group.getId());
         initGroupModify();
         clearGroupForms();
         submitGroupModify();
@@ -117,6 +119,22 @@ public class GroupHelper extends BaseHelper {
             int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
 
             groups.add(new GroupData().withId(id).withName(name));
+        }
+
+        return groups;
+    }
+
+    public Set<GroupData> all() {
+        Set<GroupData> groups = new HashSet<>();
+        List<WebElement> elements = wd.findElements(By.cssSelector("span.group"));
+
+        for (WebElement element : elements) {
+            String name = element.getText();
+            int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
+
+            groups.add(new GroupData()
+                    .withId(id)
+                    .withName(name));
         }
 
         return groups;

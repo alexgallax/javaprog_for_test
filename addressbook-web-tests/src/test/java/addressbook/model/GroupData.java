@@ -1,6 +1,7 @@
 package addressbook.model;
 
 public class GroupData {
+
     private int id = Integer.MAX_VALUE;
     private String groupName;
     private String groupHeader;
@@ -57,12 +58,15 @@ public class GroupData {
 
         GroupData groupData = (GroupData) o;
 
+        if (id != groupData.id) return false;
         return groupName != null ? groupName.equals(groupData.groupName) : groupData.groupName == null;
 
     }
 
     @Override
     public int hashCode() {
-        return groupName != null ? groupName.hashCode() : 0;
+        int result = id;
+        result = 31 * result + (groupName != null ? groupName.hashCode() : 0);
+        return result;
     }
 }

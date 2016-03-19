@@ -6,12 +6,12 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.util.List;
+import java.util.Set;
 
 public class ContactDeleteTest extends TestBase {
 
-    private List<ContactData> before;
-    private int contactIndex;
+    private Set<ContactData> before;
+    private ContactData contact;
 
     @BeforeMethod
     public void gotoContactPageAndCheckInit() {
@@ -28,25 +28,25 @@ public class ContactDeleteTest extends TestBase {
             app.goTo().gotoHomePage();
         }
 
-        before = app.contact().list();
+        before = app.contact().all();
     }
 
     @Test
     public void testContactDelete() {
-        contactIndex = before.size() - 1;
+        contact = before.iterator().next();
 
-        app.contact().delete(contactIndex);
+        app.contact().delete(contact);
         app.goTo().gotoHomePage();
 
         makeChecks();
     }
 
     private void makeChecks() {
-        List<ContactData> after = app.contact().list();
+        Set<ContactData> after = app.contact().all();
 
         Assert.assertEquals(after.size(), before.size() - 1);
 
-        before.remove(contactIndex);
+        before.remove(contact);
 
         Assert.assertEquals(after, before);
     }

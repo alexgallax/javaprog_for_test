@@ -8,17 +8,18 @@ import org.testng.annotations.Test;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 
 public class GroupCreateTest extends TestBase {
 
-    private List<GroupData> before;
+    private Set<GroupData> before;
     private GroupData group;
 
     @BeforeMethod
     public void gotoGroupPageAndCheckInit() {
         app.goTo().groupPage();
 
-        before = app.group().list();
+        before = app.group().all();
     }
 
     @Test
@@ -32,15 +33,12 @@ public class GroupCreateTest extends TestBase {
     }
 
     private void makeChecks() {
-        List<GroupData> after = app.group().list();
+        Set<GroupData> after = app.group().all();
 
         Assert.assertEquals(after.size(), before.size() + 1);
 
+        group.withId(after.stream().mapToInt(g -> g.getId()).max().getAsInt());
         before.add(group);
-
-        Comparator<? super GroupData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
-        before.sort(byId);
-        after.sort(byId);
 
         Assert.assertEquals(after, before);
     }

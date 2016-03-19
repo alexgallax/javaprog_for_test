@@ -7,14 +7,13 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.util.Comparator;
-import java.util.List;
+import java.util.Set;
 
 public class ContactCreateTest extends TestBase {
 
     public static final String GROUP_NAME = "testgroup";
 
-    private List<ContactData> before;
+    private Set<ContactData> before;
     private ContactData contact;
 
     @BeforeMethod
@@ -29,7 +28,7 @@ public class ContactCreateTest extends TestBase {
 
         app.goTo().gotoHomePage();
 
-        before = app.contact().list();
+        before = app.contact().all();
     }
 
     @Test
@@ -50,15 +49,12 @@ public class ContactCreateTest extends TestBase {
     }
 
     private void makeChecks() {
-        List<ContactData> after = app.contact().list();
+        Set<ContactData> after = app.contact().all();
 
         Assert.assertEquals(after.size(), before.size() + 1);
 
+        contact.withId(after.stream().mapToInt(c -> c.getId()).max().getAsInt());
         before.add(contact);
-
-        Comparator<? super ContactData> byId = (c1, c2) -> Integer.compare(c1.getId(), c2.getId());
-        before.sort(byId);
-        after.sort(byId);
 
         Assert.assertEquals(after, before);
     }
