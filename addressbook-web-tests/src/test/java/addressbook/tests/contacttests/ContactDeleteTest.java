@@ -18,11 +18,13 @@ public class ContactDeleteTest extends TestBase {
         app.goTo().gotoHomePage();
 
         if (! app.contact().isContactsFound()) {
-            app.contact().create(new ContactData("New", "A", "Contact",
-                    null,
-                    "unlocated house", "111-11-11",
-                    "new.contacta.@testmail.ru",
-                    null));
+            app.contact().create(new ContactData()
+                    .withFirstName("New")
+                    .withMiddleName("A")
+                    .withLastName("Contact")
+                    .withAddress("unlocated house")
+                    .withMobile("111-11-11")
+                    .withEmail("new.contacta.@testmail.ru"));
             app.goTo().gotoHomePage();
         }
 

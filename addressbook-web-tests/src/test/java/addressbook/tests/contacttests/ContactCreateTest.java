@@ -24,7 +24,7 @@ public class ContactCreateTest extends TestBase {
 
         if (! app.contact().checkGroupForContact(GROUP_NAME)) {
             app.goTo().groupPage();
-            app.group().create(new GroupData(GROUP_NAME, null, null));
+            app.group().create(new GroupData().withName(GROUP_NAME));
         }
 
         app.goTo().gotoHomePage();
@@ -34,11 +34,14 @@ public class ContactCreateTest extends TestBase {
 
     @Test
     public void testContactCreate() {
-        contact = new ContactData("New", "A", "Contact",
-                GROUP_NAME,
-                "unlocated house", "111-11-11",
-                "new.contacta.@testmail.ru",
-                null);
+        contact = new ContactData()
+                .withFirstName("New")
+                .withMiddleName("A")
+                .withLastName("Contact")
+                .withGroup(GROUP_NAME)
+                .withAddress("unlocated house")
+                .withMobile("111-11-11")
+                .withEmail("new.contacta.@testmail.ru");
 
         app.contact().create(contact);
         app.goTo().gotoHomePage();

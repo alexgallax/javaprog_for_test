@@ -18,7 +18,8 @@ public class GroupDeleteTest extends TestBase {
         app.goTo().groupPage();
 
         if (! app.group().isGroupsFound()) {
-            app.group().create(new GroupData("testgroup", null, null));
+            app.group().create(new GroupData()
+                    .withName("testgroup"));
         }
 
         before = app.group().list();

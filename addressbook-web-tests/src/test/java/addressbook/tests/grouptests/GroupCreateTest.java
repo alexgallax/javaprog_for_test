@@ -23,7 +23,8 @@ public class GroupCreateTest extends TestBase {
 
     @Test
     public void testGroupCreate() {
-        group = new GroupData("testgroup", null, null);
+        group = new GroupData()
+                .withName("testgroup");
 
         app.group().create(group);
 

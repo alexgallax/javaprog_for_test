@@ -22,7 +22,8 @@ public class GroupModifyTest extends TestBase {
         app.goTo().groupPage();
 
         if (! app.group().isGroupsFound()) {
-            app.group().create(new GroupData("testgroup", null, null));
+            app.group().create(new GroupData()
+                    .withName("testgroup"));
         }
 
         before = app.group().list();
@@ -41,7 +42,10 @@ public class GroupModifyTest extends TestBase {
     @Test
     public void testGroupModifyFillForms() {
         groupIndex = before.size() - 1;
-        group = new GroupData(before.get(groupIndex).getId(), "testgroup", "head", "foot");
+        group = new GroupData()
+                .withId(before.get(groupIndex).getId()).withName("testgroup")
+                .withHeader("head")
+                .withFooter("foot");
 
         app.group().modify(groupIndex, group);
 
@@ -51,10 +55,9 @@ public class GroupModifyTest extends TestBase {
     @Test
     public void testGroupModifyEditForms() {
         groupIndex = before.size() - 1;
-        group = new GroupData(before.get(groupIndex).getId(),
-                (before.get(groupIndex).getGroupName() + TEXT_ADDED_TO_FORM),
-                null,
-                null);
+        group = new GroupData()
+                .withId(before.get(groupIndex).getId())
+                .withName(before.get(groupIndex).getGroupName() + TEXT_ADDED_TO_FORM);
 
         app.group().edit(groupIndex, TEXT_ADDED_TO_FORM);
 
@@ -64,7 +67,11 @@ public class GroupModifyTest extends TestBase {
     @Test
     public void testGroupModifyClearForms() {
         groupIndex = 0;
-        group = new GroupData(before.get(groupIndex).getId(), "", "", "");
+        group = new GroupData()
+                .withId(before.get(groupIndex).getId())
+                .withName("")
+                .withHeader("")
+                .withFooter("");
 
         app.group().clear(groupIndex);
 

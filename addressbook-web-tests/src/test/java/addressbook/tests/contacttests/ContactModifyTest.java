@@ -22,11 +22,13 @@ public class ContactModifyTest extends TestBase {
         app.goTo().gotoHomePage();
 
         if (! app.contact().isContactsFound()) {
-            app.contact().create(new ContactData("New", "A", "Contact",
-                    null,
-                    "unlocated house", "111-11-11",
-                    "new.contacta.@testmail.ru",
-                    null));
+            app.contact().create(new ContactData()
+                    .withFirstName("New")
+                    .withMiddleName("A")
+                    .withLastName("Contact")
+                    .withAddress("unlocated house")
+                    .withMobile("111-11-11")
+                    .withEmail("new.contacta.@testmail.ru"));
             app.goTo().gotoHomePage();
         }
 
@@ -47,11 +49,14 @@ public class ContactModifyTest extends TestBase {
     @Test
     public void testContactModifyFillForms() {
         contactIndex = before.size() - 1;
-        contact = new ContactData(before.get(contactIndex).getId(), "New", "A", "Contact",
-                null,
-                "unlocated house", "111-11-11",
-                "new.contacta.@testmail.ru",
-                null);
+        contact = new ContactData()
+                .withId(before.get(contactIndex).getId())
+                .withFirstName("New")
+                .withMiddleName("A")
+                .withLastName("Contact")
+                .withAddress("unlocated house")
+                .withMobile("111-11-11")
+                .withEmail("new.contacta.@testmail.ru");
 
         app.contact().modify(contactIndex, contact);
         app.goTo().gotoHomePage();
@@ -62,15 +67,13 @@ public class ContactModifyTest extends TestBase {
     @Test
     public void testContactModifyEditForms() {
         contactIndex = before.size() - 1;
-        contact = new ContactData(before.get(contactIndex).getId(),
-                before.get(contactIndex).getFirstName() + TEXT_ADDED_TO_FORM,
-                null,
-                before.get(contactIndex).getLastName() + TEXT_ADDED_TO_FORM,
-                null,
-                before.get(contactIndex).getAddress() + TEXT_ADDED_TO_FORM,
-                before.get(contactIndex).getMobile() + TEXT_ADDED_TO_FORM,
-                before.get(contactIndex).getEmail() + TEXT_ADDED_TO_FORM,
-                null);
+        contact = new ContactData()
+                .withId(before.get(contactIndex).getId())
+                .withFirstName(before.get(contactIndex).getFirstName() + TEXT_ADDED_TO_FORM)
+                .withLastName(before.get(contactIndex).getLastName() + TEXT_ADDED_TO_FORM)
+                .withAddress(before.get(contactIndex).getAddress() + TEXT_ADDED_TO_FORM)
+                .withMobile(before.get(contactIndex).getMobile() + TEXT_ADDED_TO_FORM)
+                .withEmail(before.get(contactIndex).getEmail() + TEXT_ADDED_TO_FORM);
 
         app.contact().edit(contactIndex, TEXT_ADDED_TO_FORM);
         app.goTo().gotoHomePage();
@@ -81,7 +84,14 @@ public class ContactModifyTest extends TestBase {
     @Test
     public void testContactModifyClearForms() {
         contactIndex = 0;
-        contact = new ContactData(before.get(contactIndex).getId(), "", "", "", "", "", "", "", "");
+        contact = new ContactData()
+                .withId(before.get(contactIndex).getId())
+                .withFirstName("")
+                .withMiddleName("")
+                .withLastName("")
+                .withAddress("")
+                .withMobile("")
+                .withEmail("");
 
         app.contact().clear(contactIndex);
         app.goTo().gotoHomePage();
