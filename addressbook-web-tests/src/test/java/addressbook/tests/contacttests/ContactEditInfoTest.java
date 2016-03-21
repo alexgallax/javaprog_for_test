@@ -20,6 +20,19 @@ public class ContactEditInfoTest extends TestBase {
     public void gotoContactPageAndCheckInit() {
         app.goTo().gotoHomePage();
 
+        if (! app.contact().isContactsFound()) {
+            app.contact().create(new ContactData()
+                    .withFirstName("New")
+                    .withMiddleName("A")
+                    .withLastName("Contact")
+                    .withAddress("unlocated house")
+                    .withHomePhone("+7 (222) 111-11-11")
+                    .withMobilePhone("111-11-11")
+                    .withEmail("new.contacta.@testmail.ru")
+                    .withEmail2("  new_c@tst.com  "));
+            app.goTo().gotoHomePage();
+        }
+
         contactMainPage = app.contact().all().iterator().next();
         contactEditForm = app.contact().initEditFormInfo(contactMainPage);
     }
