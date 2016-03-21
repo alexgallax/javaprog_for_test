@@ -80,6 +80,31 @@ public class ContactHelper extends BaseHelper {
         wd.findElement(By.cssSelector("a[href='edit.php?id=" + id + "']")).click();
     }
 
+    public ContactData initEditFormInfo(ContactData contact) {
+        initContactModifyById(contact.getId());
+
+        String homePhone = wd.findElement(By.name("home")).getAttribute("value");
+        String mobilePhone = wd.findElement(By.name("mobile")).getAttribute("value");
+        String workPhone = wd.findElement(By.name("work")).getAttribute("value");
+        String homePhone2 = wd.findElement(By.name("phone2")).getAttribute("value");
+
+        String address = wd.findElement(By.name("address")).getAttribute("value");
+
+        String email = wd.findElement(By.name("email")).getAttribute("value");
+        String email2 = wd.findElement(By.name("email2")).getAttribute("value");
+        String email3 = wd.findElement(By.name("email3")).getAttribute("value");
+
+        return new ContactData()
+                .withHomePhone(homePhone)
+                .withMobilePhone(mobilePhone)
+                .withWorkPhone(workPhone)
+                .withHomePhone2(homePhone2)
+                .withAddress(address)
+                .withEmail(email)
+                .withEmail2(email2)
+                .withEmail3(email3);
+    }
+
     public boolean isContactsFound() {
         try {
             String contactsNumber = wd.findElement(By.id("search_count")).getText();
@@ -168,7 +193,7 @@ public class ContactHelper extends BaseHelper {
             String lastName = element.findElements(By.tagName("td")).get(1).getText();
             String firstName = element.findElements(By.tagName("td")).get(2).getText();
             String address = element.findElements(By.tagName("td")).get(3).getText();
-            String email = element.findElements(By.tagName("td")).get(4).getText();
+            String allEmails = element.findElements(By.tagName("td")).get(4).getText();
             String allPhones = element.findElements(By.tagName("td")).get(5).getText();
 
             int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
@@ -178,8 +203,8 @@ public class ContactHelper extends BaseHelper {
                     .withFirstName(firstName)
                     .withLastName(lastName)
                     .withAddress(address)
-                    .withAllPhones(allPhones)
-                    .withEmail(email));
+                    .withAllEmails(allEmails)
+                    .withAllPhones(allPhones));
         }
 
         return contacts;
