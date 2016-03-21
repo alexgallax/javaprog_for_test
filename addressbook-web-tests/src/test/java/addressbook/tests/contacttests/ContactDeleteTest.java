@@ -24,7 +24,7 @@ public class ContactDeleteTest extends TestBase {
                     .withMiddleName("A")
                     .withLastName("Contact")
                     .withAddress("unlocated house")
-                    .withMobile("111-11-11")
+                    .withMobilePhone("111-11-11")
                     .withEmail("new.contacta.@testmail.ru"));
             app.goTo().gotoHomePage();
         }

@@ -10,9 +10,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class ContactHelper extends BaseHelper {
 
@@ -33,7 +31,7 @@ public class ContactHelper extends BaseHelper {
         type(By.name("middlename"), contactData.getMiddleName());
         type(By.name("lastname"), contactData.getLastName());
         type(By.name("address"), contactData.getAddress());
-        type(By.name("mobile"), contactData.getMobile());
+        type(By.name("mobile"), contactData.getMobilePhone());
         type(By.name("email"), contactData.getEmail());
         type(By.name("notes"), contactData.getNotes());
 
@@ -153,7 +151,7 @@ public class ContactHelper extends BaseHelper {
                     .withFirstName(firstName)
                     .withLastName(lastName)
                     .withAddress(address)
-                    .withMobile(mobile)
+                    .withMobilePhone(mobile)
                     .withEmail(email);
 
             contacts.add(contact);
@@ -171,7 +169,7 @@ public class ContactHelper extends BaseHelper {
             String firstName = element.findElements(By.tagName("td")).get(2).getText();
             String address = element.findElements(By.tagName("td")).get(3).getText();
             String email = element.findElements(By.tagName("td")).get(4).getText();
-            String mobile = element.findElements(By.tagName("td")).get(5).getText();
+            String allPhones = element.findElements(By.tagName("td")).get(5).getText();
 
             int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
 
@@ -180,7 +178,7 @@ public class ContactHelper extends BaseHelper {
                     .withFirstName(firstName)
                     .withLastName(lastName)
                     .withAddress(address)
-                    .withMobile(mobile)
+                    .withAllPhones(allPhones)
                     .withEmail(email));
         }
 

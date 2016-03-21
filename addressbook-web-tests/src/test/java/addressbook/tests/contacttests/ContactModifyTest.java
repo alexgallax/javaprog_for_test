@@ -26,7 +26,7 @@ public class ContactModifyTest extends TestBase {
                     .withMiddleName("A")
                     .withLastName("Contact")
                     .withAddress("unlocated house")
-                    .withMobile("111-11-11")
+                    .withMobilePhone("111-11-11")
                     .withEmail("new.contacta.@testmail.ru"));
             app.goTo().gotoHomePage();
         }
@@ -54,7 +54,7 @@ public class ContactModifyTest extends TestBase {
                 .withMiddleName("A")
                 .withLastName("Contact")
                 .withAddress("unlocated house")
-                .withMobile("111-11-11")
+                .withMobilePhone("111-11-11")
                 .withEmail("new.contacta.@testmail.ru");
 
         app.contact().modify(contact);
@@ -70,7 +70,7 @@ public class ContactModifyTest extends TestBase {
                 .withFirstName(modifiedContact.getFirstName() + TEXT_ADDED_TO_FORM)
                 .withLastName(modifiedContact.getLastName() + TEXT_ADDED_TO_FORM)
                 .withAddress(modifiedContact.getAddress() + TEXT_ADDED_TO_FORM)
-                .withMobile(modifiedContact.getMobile() + TEXT_ADDED_TO_FORM)
+                .withMobilePhone(modifiedContact.getMobilePhone() + TEXT_ADDED_TO_FORM)
                 .withEmail(modifiedContact.getEmail() + TEXT_ADDED_TO_FORM);
 
         app.contact().edit(contact, TEXT_ADDED_TO_FORM);
@@ -87,7 +87,7 @@ public class ContactModifyTest extends TestBase {
                 .withMiddleName("")
                 .withLastName("")
                 .withAddress("")
-                .withMobile("")
+                .withMobilePhone("")
                 .withEmail("");
 
         app.contact().clear(contact);
