@@ -2,18 +2,19 @@ package addressbook.tests.contacttests;
 
 import addressbook.model.ContactData;
 import addressbook.model.GroupData;
+import addressbook.model.Items;
 import addressbook.tests.TestBase;
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.util.Set;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ContactCreateTest extends TestBase {
 
     public static final String GROUP_NAME = "testgroup";
 
-    private Set<ContactData> before;
+    private Items<ContactData> before;
     private ContactData contact;
 
     @BeforeMethod
@@ -49,13 +50,12 @@ public class ContactCreateTest extends TestBase {
     }
 
     private void makeChecks() {
-        Set<ContactData> after = app.contact().all();
+        Items<ContactData> after = app.contact().all();
 
-        Assert.assertEquals(after.size(), before.size() + 1);
-
-        contact.withId(after.stream().mapToInt(c -> c.getId()).max().getAsInt());
-        before.add(contact);
-
-        Assert.assertEquals(after, before);
+        assertThat(after.size(), equalTo(before.size() + 1));
+        assertThat(after, equalTo(
+                before
+                        .withAdded(contact
+                                .withId(after.stream().mapToInt(c -> c.getId()).max().getAsInt()))));
     }
 }

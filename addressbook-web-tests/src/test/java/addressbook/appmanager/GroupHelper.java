@@ -1,14 +1,13 @@
 package addressbook.appmanager;
 
 import addressbook.model.GroupData;
+import addressbook.model.Items;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class GroupHelper extends BaseHelper {
 
@@ -124,8 +123,8 @@ public class GroupHelper extends BaseHelper {
         return groups;
     }
 
-    public Set<GroupData> all() {
-        Set<GroupData> groups = new HashSet<>();
+    public Items<GroupData> all() {
+        Items<GroupData> groups = new Items<>();
         List<WebElement> elements = wd.findElements(By.cssSelector("span.group"));
 
         for (WebElement element : elements) {

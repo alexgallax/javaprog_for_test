@@ -1,6 +1,7 @@
 package addressbook.appmanager;
 
 import addressbook.model.ContactData;
+import addressbook.model.Items;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -161,8 +162,8 @@ public class ContactHelper extends BaseHelper {
         return contacts;
     }
 
-    public Set<ContactData> all() {
-        Set<ContactData> contacts = new HashSet<>();
+    public Items<ContactData> all() {
+        Items<ContactData> contacts = new Items<>();
         List<WebElement> elements = wd.findElements(By.name(("entry")));
 
         for (WebElement element : elements) {

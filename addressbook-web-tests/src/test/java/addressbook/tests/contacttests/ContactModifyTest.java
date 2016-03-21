@@ -1,18 +1,18 @@
 package addressbook.tests.contacttests;
 
 import addressbook.model.ContactData;
+import addressbook.model.Items;
 import addressbook.tests.TestBase;
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.util.Set;
-
 import static addressbook.tests.consts.TestConsts.TEXT_ADDED_TO_FORM;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ContactModifyTest extends TestBase {
 
-    private Set<ContactData> before;
+    private Items<ContactData> before;
     private ContactData modifiedContact;
     private ContactData contact;
 
@@ -97,13 +97,12 @@ public class ContactModifyTest extends TestBase {
     }
 
     private void makeChecks() {
-        Set<ContactData> after = app.contact().all();
+        Items<ContactData> after = app.contact().all();
 
-        Assert.assertEquals(after.size(), before.size());
-
-        before.remove(modifiedContact);
-        before.add(contact);
-
-        Assert.assertEquals(after, before);
+        assertThat(after.size(), equalTo(before.size()));
+        assertThat(after, equalTo(
+                before
+                        .without(modifiedContact)
+                        .withAdded(contact)));
     }
 }

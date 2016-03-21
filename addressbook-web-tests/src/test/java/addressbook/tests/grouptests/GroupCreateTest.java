@@ -1,18 +1,17 @@
 package addressbook.tests.grouptests;
 
 import addressbook.model.GroupData;
+import addressbook.model.Items;
 import addressbook.tests.TestBase;
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class GroupCreateTest extends TestBase {
 
-    private Set<GroupData> before;
+    private Items<GroupData> before;
     private GroupData group;
 
     @BeforeMethod
@@ -33,13 +32,12 @@ public class GroupCreateTest extends TestBase {
     }
 
     private void makeChecks() {
-        Set<GroupData> after = app.group().all();
+        Items<GroupData> after = app.group().all();
 
-        Assert.assertEquals(after.size(), before.size() + 1);
-
-        group.withId(after.stream().mapToInt(g -> g.getId()).max().getAsInt());
-        before.add(group);
-
-        Assert.assertEquals(after, before);
+        assertThat(after.size(), equalTo(before.size() + 1));
+        assertThat(after, equalTo(
+                before
+                        .withAdded(group
+                                .withId(after.stream().mapToInt(g -> g.getId()).max().getAsInt()))));
     }
 }
