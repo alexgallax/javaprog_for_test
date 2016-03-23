@@ -2,12 +2,14 @@ package addressbook.tests.contacttests;
 
 import addressbook.model.ContactData;
 import addressbook.tests.TestBase;
+import addressbook.tests.utils.TestFuncs;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
+import static addressbook.tests.utils.TestFuncs.cleanSpaces;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -39,7 +41,7 @@ public class ContactEditInfoTest extends TestBase {
 
     @Test
     public void testContactAddress() {
-        assertThat(contactMainPage.getAddress(), equalTo(clean(contactEditForm.getAddress())));
+        assertThat(contactMainPage.getAddress(), equalTo(cleanSpaces(contactEditForm.getAddress())));
     }
 
     @Test
@@ -57,7 +59,7 @@ public class ContactEditInfoTest extends TestBase {
                 contact.getEmail(), contact.getEmail2(), contact.getEmail3())
                 .stream()
                 .filter((s) -> ! s.equals(""))
-                .map(ContactEditInfoTest::clean)
+                .map(TestFuncs::cleanSpaces)
                 .collect(Collectors.joining("\n"));
     }
 
@@ -68,10 +70,6 @@ public class ContactEditInfoTest extends TestBase {
                 .filter((s) -> ! s.equals(""))
                 .map(ContactEditInfoTest::cleanPhones)
                 .collect(Collectors.joining("\n"));
-    }
-
-    private static String clean(String str) {
-        return str.replaceAll("^\\s*", "").replaceAll("\\s*$", "");
     }
 
     private static String cleanPhones(String phone) {

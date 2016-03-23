@@ -6,22 +6,37 @@ public class ContactData {
     private String firstName;
     private String middleName;
     private String lastName;
+    private String nickname;
     private String group;
 
+    private String company;
+    private String title;
     private String address;
 
     private String homePhone;
     private String mobilePhone;
     private String workPhone;
-    private String homePhone2;
     private String allPhones;
+    private String fax;
 
     private String email;
     private String email2;
     private String email3;
     private String allEmails;
+    private String homepage;
 
+    private String bday;
+    private String bmonth;
+    private String byear;
+    private String aday;
+    private String amonth;
+    private String ayear;
+
+    private String address2;
+    private String homePhone2;
     private String notes;
+
+    private String details;
 
     public int getId() {
         return id;
@@ -37,6 +52,18 @@ public class ContactData {
 
     public String getLastName() {
         return lastName;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public String getTitle() {
+        return title;
     }
 
     public String getAddress() {
@@ -59,12 +86,12 @@ public class ContactData {
         return workPhone;
     }
 
-    public String getHomePhone2() {
-        return homePhone2;
-    }
-
     public String getAllPhones() {
         return allPhones;
+    }
+
+    public String getFax() {
+        return fax;
     }
 
     public String getEmail() {
@@ -83,8 +110,48 @@ public class ContactData {
         return allEmails;
     }
 
+    public String getHomepage() {
+        return homepage;
+    }
+
+    public String getBday() {
+        return bday;
+    }
+
+    public String getBmonth() {
+        return bmonth;
+    }
+
+    public String getByear() {
+        return byear;
+    }
+
+    public String getAday() {
+        return aday;
+    }
+
+    public String getAmonth() {
+        return amonth;
+    }
+
+    public String getAyear() {
+        return ayear;
+    }
+
+    public String getAddress2() {
+        return address2;
+    }
+
+    public String getHomePhone2() {
+        return homePhone2;
+    }
+
     public String getNotes() {
         return notes;
+    }
+
+    public String getDetails() {
+        return details;
     }
 
     public ContactData withId(int id) {
@@ -107,8 +174,23 @@ public class ContactData {
         return this;
     }
 
+    public ContactData withNickname(String nickname) {
+        this.nickname = nickname;
+        return this;
+    }
+
     public ContactData withGroup(String group) {
         this.group = group;
+        return this;
+    }
+
+    public ContactData withCompany(String company) {
+        this.company = company;
+        return this;
+    }
+
+    public ContactData withTitle(String title) {
+        this.title = title;
         return this;
     }
 
@@ -132,13 +214,13 @@ public class ContactData {
         return this;
     }
 
-    public ContactData withHomePhone2(String homePhone2) {
-        this.homePhone2 = homePhone2;
+    public ContactData withAllPhones(String allPhones) {
+        this.allPhones = allPhones;
         return this;
     }
 
-    public ContactData withAllPhones(String allPhones) {
-        this.allPhones = allPhones;
+    public ContactData withFax(String fax) {
+        this.fax = fax;
         return this;
     }
 
@@ -162,8 +244,58 @@ public class ContactData {
         return this;
     }
 
+    public ContactData withHomepage(String homepage) {
+        this.homepage = homepage;
+        return this;
+    }
+
+    public ContactData withBday(String bday) {
+        this.bday = bday;
+        return this;
+    }
+
+    public ContactData withBmonth(String bmonth) {
+        this.bmonth = bmonth;
+        return this;
+    }
+
+    public ContactData withByear(String byear) {
+        this.byear = byear;
+        return this;
+    }
+
+    public ContactData withAday(String aday) {
+        this.aday = aday;
+        return this;
+    }
+
+    public ContactData withAmonth(String amonth) {
+        this.amonth = amonth;
+        return this;
+    }
+
+    public ContactData withAyear(String ayear) {
+        this.ayear = ayear;
+        return this;
+    }
+
+    public ContactData withAddress2(String address2) {
+        this.address2 = address2;
+        return this;
+    }
+
+    public ContactData withHomePhone2(String homePhone2) {
+        this.homePhone2 = homePhone2;
+        return this;
+    }
+
     public ContactData withNotes(String notes) {
         this.notes = notes;
+        return this;
+    }
+
+    public ContactData withDetails(String details) {
+        this.details = details;
         return this;
     }
 
