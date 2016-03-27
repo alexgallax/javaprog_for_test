@@ -14,6 +14,8 @@ import java.util.List;
 
 public class ContactHelper extends BaseHelper {
 
+    private Items<ContactData> contactCache = null;
+
     public ContactHelper(WebDriver wd) {
         super(wd);
     }
@@ -170,35 +172,41 @@ public class ContactHelper extends BaseHelper {
         initContactCreate();
         fillContactForms(contact, true);
         submitContactCreate();
+        contactCache = null;
     }
 
     public void delete(ContactData contact) {
         selectContactById(contact.getId());
         initContactDelete();
         closeAlert();
+        contactCache = null;
     }
 
     public void modify(ContactData contact) {
         initContactModifyById(contact.getId());
         fillContactForms(contact, false);
         submitContactModify();
+        contactCache = null;
     }
 
     public void noEdit(ContactData contact) {
         initContactModifyById(contact.getId());
         submitContactModify();
+        contactCache = null;
     }
 
     public void edit(ContactData contact, String text) {
         initContactModifyById(contact.getId());
         addTextToContactForms(text);
         submitContactModify();
+        contactCache = null;
     }
 
     public void clear(ContactData contact) {
         initContactModifyById(contact.getId());
         clearContactForms();
         submitContactModify();
+        contactCache = null;
     }
 
     public boolean checkGroupForContact(String groupName) {
@@ -238,7 +246,11 @@ public class ContactHelper extends BaseHelper {
     }
 
     public Items<ContactData> all() {
-        Items<ContactData> contacts = new Items<>();
+        if (contactCache != null) {
+            return new Items<>(contactCache);
+        }
+
+        contactCache = new Items<>();
         List<WebElement> elements = wd.findElements(By.name(("entry")));
 
         for (WebElement element : elements) {
@@ -250,7 +262,7 @@ public class ContactHelper extends BaseHelper {
 
             int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
 
-            contacts.add(new ContactData()
+            contactCache.add(new ContactData()
                     .withId(id)
                     .withFirstName(firstName)
                     .withLastName(lastName)
@@ -259,6 +271,6 @@ public class ContactHelper extends BaseHelper {
                     .withAllPhones(allPhones));
         }
 
-        return contacts;
+        return new Items<>(contactCache);
     }
 }
