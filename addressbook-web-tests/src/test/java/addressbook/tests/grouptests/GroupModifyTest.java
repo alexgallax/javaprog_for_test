@@ -76,9 +76,9 @@ public class GroupModifyTest extends TestBase {
     }
 
     private void makeChecks() {
-        Items<GroupData> after = app.group().all();
+        assertThat(app.group().count(), equalTo(before.size()));
 
-        assertThat(after.size(), equalTo(before.size()));
+        Items<GroupData> after = app.group().all();
         assertThat(after, equalTo(
                 before
                         .without(modifiedGroup)

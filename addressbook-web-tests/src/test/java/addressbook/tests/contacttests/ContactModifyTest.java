@@ -97,9 +97,9 @@ public class ContactModifyTest extends TestBase {
     }
 
     private void makeChecks() {
-        Items<ContactData> after = app.contact().all();
+        assertThat(app.contact().count(), equalTo(before.size()));
 
-        assertThat(after.size(), equalTo(before.size()));
+        Items<ContactData> after = app.contact().all();
         assertThat(after, equalTo(
                 before
                         .without(modifiedContact)

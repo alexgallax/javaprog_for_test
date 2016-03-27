@@ -43,9 +43,9 @@ public class ContactDeleteTest extends TestBase {
     }
 
     private void makeChecks() {
-        Items<ContactData> after = app.contact().all();
+        assertThat(app.contact().count(), equalTo(before.size() - 1));
 
-        assertThat(after.size(), equalTo(before.size() - 1));
+        Items<ContactData> after = app.contact().all();
         assertThat(after, equalTo(
                 before
                         .without(contact)));

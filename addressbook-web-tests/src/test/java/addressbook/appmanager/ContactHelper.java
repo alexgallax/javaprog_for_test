@@ -168,6 +168,10 @@ public class ContactHelper extends BaseHelper {
         }
     }
 
+    public int count() {
+        return wd.findElements(By.name("selected[]")).size();
+    }
+
     public void create(ContactData contact) {
         initContactCreate();
         fillContactForms(contact, true);

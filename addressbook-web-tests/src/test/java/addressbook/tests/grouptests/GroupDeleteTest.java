@@ -35,9 +35,9 @@ public class GroupDeleteTest extends TestBase {
     }
 
     private void makeChecks() {
-        Items<GroupData> after = app.group().all();
+        assertThat(app.group().count(), equalTo(before.size() - 1));
 
-        assertThat(after.size(), equalTo(before.size() - 1));
+        Items<GroupData> after = app.group().all();
         assertThat(after, equalTo(
                 before
                         .without(group)));
