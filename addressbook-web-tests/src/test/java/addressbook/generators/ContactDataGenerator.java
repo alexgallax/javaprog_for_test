@@ -26,7 +26,7 @@ public class ContactDataGenerator extends GeneratorBase {
         generator.run();
     }
 
-    public void run() throws IOException {
+    private void run() throws IOException {
         List<ContactData> contacts = generateContacts(count);
 
         if (format.equals("csv")) {

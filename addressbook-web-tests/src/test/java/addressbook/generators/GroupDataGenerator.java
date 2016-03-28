@@ -26,7 +26,7 @@ public class GroupDataGenerator extends GeneratorBase {
         generator.run();
     }
 
-    public void run() throws IOException {
+    private void run() throws IOException {
         List<GroupData> groups = generateGroups(count);
 
         if (format.equals("csv")) {

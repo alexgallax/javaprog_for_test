@@ -4,9 +4,18 @@ import addressbook.model.ContactData;
 import addressbook.model.GroupData;
 import addressbook.model.Items;
 import addressbook.tests.TestBase;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static addressbook.tests.consts.TestConsts.TEST_CONTACTS_JSON_FILEPATH;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -15,7 +24,16 @@ public class ContactCreateTest extends TestBase {
     public static final String GROUP_NAME = "testgroup";
 
     private Items<ContactData> before;
-    private ContactData contact;
+
+    @DataProvider
+    public Iterator<Object[]> testContacts() throws IOException {
+        String json = readTestDataToJson(TEST_CONTACTS_JSON_FILEPATH);
+
+        Gson gson = new Gson();
+        List<ContactData> contacts = gson.fromJson(json, new TypeToken<List<ContactData>>(){}.getType());
+
+        return contacts.stream().map((c) -> new Object[] {c}).collect(Collectors.toList()).iterator();
+    }
 
     @BeforeMethod
     public void checkGroupForContactPresent() {
@@ -32,24 +50,15 @@ public class ContactCreateTest extends TestBase {
         before = app.contact().all();
     }
 
-    @Test
-    public void testContactCreate() {
-        contact = new ContactData()
-                .withFirstName("New")
-                .withMiddleName("A")
-                .withLastName("Contact")
-                .withGroup(GROUP_NAME)
-                .withAddress("unlocated house")
-                .withMobilePhone("111-11-11")
-                .withEmail("new.contacta.@testmail.ru");
-
+    @Test(dataProvider = "testContacts")
+    public void testContactCreate(ContactData contact) {
         app.contact().create(contact);
         app.goTo().gotoHomePage();
 
-        makeChecks();
+        makeChecks(contact);
     }
 
-    private void makeChecks() {
+    private void makeChecks(ContactData contact) {
         assertThat(app.contact().count(), equalTo(before.size() + 1));
 
         Items<ContactData> after = app.contact().all();
