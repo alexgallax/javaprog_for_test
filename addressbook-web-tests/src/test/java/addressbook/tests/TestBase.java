@@ -9,11 +9,12 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
-import static addressbook.tests.consts.TestConsts.TEST_BROWSER;
+import static addressbook.tests.consts.TestConsts.DEFAULT_TEST_BROWSER;
 
 public class TestBase {
 
-    protected static final ApplicationManager app = new ApplicationManager(TEST_BROWSER);
+    protected static final ApplicationManager app
+            = new ApplicationManager(System.getProperty("browser", DEFAULT_TEST_BROWSER));
 
     protected String readTestDataToJson(String filePath) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(new File(filePath)));
