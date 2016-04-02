@@ -47,7 +47,7 @@ public class ContactCreateTest extends TestBase {
 
         app.goTo().gotoHomePage();
 
-        before = app.contact().all();
+        before = app.db().contacts();
     }
 
     @Test(dataProvider = "testContacts")
@@ -61,7 +61,7 @@ public class ContactCreateTest extends TestBase {
     private void makeChecks(ContactData contact) {
         assertThat(app.contact().count(), equalTo(before.size() + 1));
 
-        Items<ContactData> after = app.contact().all();
+        Items<ContactData> after = app.db().contacts();
         assertThat(after, equalTo(
                 before
                         .withAdded(contact

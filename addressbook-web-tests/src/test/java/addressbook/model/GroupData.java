@@ -83,7 +83,10 @@ public class GroupData {
         GroupData groupData = (GroupData) o;
 
         if (id != groupData.id) return false;
-        return groupName != null ? groupName.equals(groupData.groupName) : groupData.groupName == null;
+        if (groupName != null ? !groupName.equals(groupData.groupName) : groupData.groupName != null) return false;
+        if (groupHeader != null ? !groupHeader.equals(groupData.groupHeader) : groupData.groupHeader != null)
+            return false;
+        return groupFooter != null ? groupFooter.equals(groupData.groupFooter) : groupData.groupFooter == null;
 
     }
 
@@ -91,6 +94,8 @@ public class GroupData {
     public int hashCode() {
         int result = id;
         result = 31 * result + (groupName != null ? groupName.hashCode() : 0);
+        result = 31 * result + (groupHeader != null ? groupHeader.hashCode() : 0);
+        result = 31 * result + (groupFooter != null ? groupFooter.hashCode() : 0);
         return result;
     }
 }

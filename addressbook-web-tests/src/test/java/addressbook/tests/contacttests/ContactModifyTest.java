@@ -31,7 +31,7 @@ public class ContactModifyTest extends TestBase {
             app.goTo().gotoHomePage();
         }
 
-        before = app.contact().all();
+        before = app.db().contacts();
 
         modifiedContact = before.iterator().next();
     }
@@ -68,10 +68,12 @@ public class ContactModifyTest extends TestBase {
         contact = new ContactData()
                 .withId(modifiedContact.getId())
                 .withFirstName(modifiedContact.getFirstName() + TEXT_ADDED_TO_FORM)
+                .withMiddleName(modifiedContact.getMiddleName() + TEXT_ADDED_TO_FORM)
                 .withLastName(modifiedContact.getLastName() + TEXT_ADDED_TO_FORM)
                 .withAddress(modifiedContact.getAddress() + TEXT_ADDED_TO_FORM)
                 .withMobilePhone(modifiedContact.getMobilePhone() + TEXT_ADDED_TO_FORM)
-                .withEmail(modifiedContact.getEmail() + TEXT_ADDED_TO_FORM);
+                .withEmail(modifiedContact.getEmail() + TEXT_ADDED_TO_FORM)
+                .withNotes(modifiedContact.getNotes() + TEXT_ADDED_TO_FORM);
 
         app.contact().edit(contact, TEXT_ADDED_TO_FORM);
         app.goTo().gotoHomePage();
@@ -99,7 +101,7 @@ public class ContactModifyTest extends TestBase {
     private void makeChecks() {
         assertThat(app.contact().count(), equalTo(before.size()));
 
-        Items<ContactData> after = app.contact().all();
+        Items<ContactData> after = app.db().contacts();
         assertThat(after, equalTo(
                 before
                         .without(modifiedContact)

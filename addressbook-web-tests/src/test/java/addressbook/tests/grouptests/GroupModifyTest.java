@@ -25,7 +25,7 @@ public class GroupModifyTest extends TestBase {
                     .withName("testgroup"));
         }
 
-        before = app.group().all();
+        before = app.db().groups();
         modifiedGroup = before.iterator().next();
     }
 
@@ -55,7 +55,9 @@ public class GroupModifyTest extends TestBase {
     public void testGroupModifyEditForms() {
         group = new GroupData()
                 .withId(modifiedGroup.getId())
-                .withName(modifiedGroup.getGroupName() + TEXT_ADDED_TO_FORM);
+                .withName(modifiedGroup.getGroupName() + TEXT_ADDED_TO_FORM)
+                .withHeader(modifiedGroup.getGroupHeader() + TEXT_ADDED_TO_FORM)
+                .withFooter(modifiedGroup.getGroupFooter() + TEXT_ADDED_TO_FORM);
 
         app.group().edit(group, TEXT_ADDED_TO_FORM);
 
@@ -78,7 +80,7 @@ public class GroupModifyTest extends TestBase {
     private void makeChecks() {
         assertThat(app.group().count(), equalTo(before.size()));
 
-        Items<GroupData> after = app.group().all();
+        Items<GroupData> after = app.db().groups();
         assertThat(after, equalTo(
                 before
                         .without(modifiedGroup)

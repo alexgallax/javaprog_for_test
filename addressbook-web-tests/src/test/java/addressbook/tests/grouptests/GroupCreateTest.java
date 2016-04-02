@@ -36,7 +36,7 @@ public class GroupCreateTest extends TestBase {
     public void gotoGroupPageAndCheckInit() {
         app.goTo().groupPage();
 
-        before = app.group().all();
+        before = app.db().groups();
     }
 
     @Test(dataProvider = "testGroups")
@@ -49,7 +49,7 @@ public class GroupCreateTest extends TestBase {
     private void makeChecks(GroupData group) {
         assertThat(app.group().count(), equalTo(before.size() + 1));
 
-        Items<GroupData> after = app.group().all();
+        Items<GroupData> after = app.db().groups();
         assertThat(after, equalTo(
                 before
                         .withAdded(group

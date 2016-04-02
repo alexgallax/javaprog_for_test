@@ -23,7 +23,7 @@ public class GroupDeleteTest extends TestBase {
                     .withName("testgroup"));
         }
 
-        before = app.group().all();
+        before = app.db().groups();
         group = before.iterator().next();
     }
 
@@ -37,7 +37,7 @@ public class GroupDeleteTest extends TestBase {
     private void makeChecks() {
         assertThat(app.group().count(), equalTo(before.size() - 1));
 
-        Items<GroupData> after = app.group().all();
+        Items<GroupData> after = app.db().groups();
         assertThat(after, equalTo(
                 before
                         .without(group)));
