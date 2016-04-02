@@ -1,5 +1,6 @@
 package addressbook.tests.dbtests;
 
+import addressbook.model.ContactData;
 import addressbook.model.GroupData;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -33,12 +34,24 @@ public class HbConnectionTest {
     }
 
     @Test
-    public void testHbConnection() {
+    public void testGroupHbConnection() {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         List<GroupData> result = session.createQuery("from GroupData").list();
         for (GroupData group : result) {
             System.out.println(group);
+        }
+        session.getTransaction().commit();
+        session.close();
+    }
+
+    @Test
+    public void testContactHbConnection() {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        List<ContactData> result = session.createQuery("from ContactData").list();
+        for (ContactData contact : result) {
+            System.out.println(contact);
         }
         session.getTransaction().commit();
         session.close();

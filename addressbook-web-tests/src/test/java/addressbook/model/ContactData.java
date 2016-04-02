@@ -3,50 +3,102 @@ package addressbook.model;
 import com.google.gson.annotations.Expose;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import org.hibernate.annotations.Type;
+
+import javax.persistence.*;
+import java.io.File;
 
 @XStreamAlias("contact")
+@Entity
+@Table(name = "addressbook")
 public class ContactData {
 
     @XStreamOmitField
+    @Id
+    @Column(name = "id")
     private int id = Integer.MAX_VALUE;
     @Expose
+    @Column(name = "firstname")
     private String firstName;
+    @Column(name = "middlename")
     private String middleName;
     @Expose
+    @Column(name = "lastname")
     private String lastName;
+    @Column(name = "nickname")
     private String nickname;
+    @Transient
     private String group;
 
+    @Column(name = "company")
     private String company;
+    @Column(name = "title")
     private String title;
     @Expose
+    @Column(name = "address")
+    @Type(type = "text")
     private String address;
 
+    @Column(name = "home")
+    @Type(type = "text")
     private String homePhone;
     @Expose
+    @Column(name = "mobile")
+    @Type(type = "text")
     private String mobilePhone;
+    @Column(name = "work")
+    @Type(type = "text")
     private String workPhone;
+    @Transient
     private String allPhones;
+    @Column(name = "fax")
+    @Type(type = "text")
     private String fax;
 
     @Expose
+    @Column(name = "email")
+    @Type(type = "text")
     private String email;
+    @Column(name = "email2")
+    @Type(type = "text")
     private String email2;
+    @Column(name = "email3")
+    @Type(type = "text")
     private String email3;
+    @Transient
     private String allEmails;
+    @Column(name = "homepage")
+    @Type(type = "text")
     private String homepage;
 
+    @Column(name = "bday", columnDefinition = "TINYINT")
     private String bday;
+    @Column(name = "bmonth")
     private String bmonth;
+    @Column(name = "byear")
     private String byear;
+    @Column(name = "aday", columnDefinition = "TINYINT")
     private String aday;
+    @Column(name = "amonth")
     private String amonth;
+    @Column(name = "ayear")
     private String ayear;
 
+    @Column(name = "address2")
+    @Type(type = "text")
     private String address2;
+    @Column(name = "phone2")
+    @Type(type = "text")
     private String homePhone2;
+    @Column(name = "notes")
+    @Type(type = "text")
     private String notes;
 
+    @Column(name = "photo")
+    @Type(type = "text")
+    private String photoPath;
+
+    @Transient
     private String details;
 
     public int getId() {
@@ -159,6 +211,10 @@ public class ContactData {
 
     public String getNotes() {
         return notes;
+    }
+
+    public File getPhoto() {
+        return (new File(photoPath));
     }
 
     public String getDetails() {
@@ -302,6 +358,11 @@ public class ContactData {
 
     public ContactData withNotes(String notes) {
         this.notes = notes;
+        return this;
+    }
+
+    public ContactData withPhoto(File photo) {
+        this.photoPath = photo.getPath();
         return this;
     }
 
