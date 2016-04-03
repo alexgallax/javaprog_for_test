@@ -49,5 +49,7 @@ public class ContactDeleteTest extends TestBase {
         assertThat(after, equalTo(
                 before
                         .without(contact)));
+
+        verifyContactsInUI();
     }
 }

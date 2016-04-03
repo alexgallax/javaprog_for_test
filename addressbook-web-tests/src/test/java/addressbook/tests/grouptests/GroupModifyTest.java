@@ -85,5 +85,7 @@ public class GroupModifyTest extends TestBase {
                 before
                         .without(modifiedGroup)
                         .withAdded(group)));
+
+        verifyGroupsInUI();
     }
 }

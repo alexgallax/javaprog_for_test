@@ -106,5 +106,7 @@ public class ContactModifyTest extends TestBase {
                 before
                         .without(modifiedContact)
                         .withAdded(contact)));
+
+        verifyContactsInUI();
     }
 }

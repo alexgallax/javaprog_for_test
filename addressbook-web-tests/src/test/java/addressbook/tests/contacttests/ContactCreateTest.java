@@ -66,5 +66,7 @@ public class ContactCreateTest extends TestBase {
                 before
                         .withAdded(contact
                                 .withId(after.stream().mapToInt(c -> c.getId()).max().getAsInt()))));
+
+        verifyContactsInUI();
     }
 }

@@ -54,5 +54,7 @@ public class GroupCreateTest extends TestBase {
                 before
                         .withAdded(group
                                 .withId(after.stream().mapToInt(g -> g.getId()).max().getAsInt()))));
+
+        verifyGroupsInUI();
     }
 }
