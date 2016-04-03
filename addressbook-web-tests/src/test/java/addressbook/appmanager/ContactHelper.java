@@ -12,6 +12,8 @@ import org.testng.Assert;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.testng.Assert.assertTrue;
+
 public class ContactHelper extends BaseHelper {
 
     private Items<ContactData> contactCache = null;
@@ -43,8 +45,11 @@ public class ContactHelper extends BaseHelper {
         type(By.name("notes"), contactData.getNotes());
 
         if (create) {
-            if (contactData.getGroup() != null) {
-                new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+            if (contactData.getGroups().size() > 0) {
+                assertTrue(contactData.getGroups().size() == 1);
+
+                new Select(wd.findElement(By.name("new_group")))
+                        .selectByVisibleText(contactData.getGroups().iterator().next().getGroupName());
             }
         } else {
             Assert.assertFalse(isElementFound(By.name("new_group")));
