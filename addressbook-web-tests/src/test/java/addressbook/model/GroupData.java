@@ -30,7 +30,7 @@ public class GroupData {
     @Type(type = "text")
     private String groupFooter;
 
-    @ManyToMany(mappedBy = "groups")
+    @ManyToMany(mappedBy = "groups", fetch = FetchType.EAGER)
     private Set<ContactData> contacts = new HashSet<>();
 
     public int getId() {

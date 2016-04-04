@@ -4,8 +4,6 @@ import addressbook.appmanager.ApplicationManager;
 import addressbook.model.ContactData;
 import addressbook.model.GroupData;
 import addressbook.model.Items;
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.MatcherAssert;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 
@@ -13,6 +11,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 import static addressbook.tests.consts.TestConsts.DEFAULT_TEST_BROWSER;
@@ -83,5 +82,17 @@ public class TestBase {
                                             .withLastName(c.getLastName()))
                                     .collect(Collectors.toSet())));
         }
+    }
+
+    protected String generateRandomName(int length) {
+        String name = "";
+        Random random = new Random();
+
+        for (int i = 0; i < length; i++) {
+            int randomInt = random.nextInt(10);
+            name += String.valueOf(randomInt);
+        }
+
+        return name;
     }
 }

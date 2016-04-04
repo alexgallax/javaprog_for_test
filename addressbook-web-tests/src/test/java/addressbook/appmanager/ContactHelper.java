@@ -1,6 +1,7 @@
 package addressbook.appmanager;
 
 import addressbook.model.ContactData;
+import addressbook.model.GroupData;
 import addressbook.model.Items;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -225,6 +226,18 @@ public class ContactHelper extends BaseHelper {
         } catch (NoSuchElementException e) {
             return false;
         }
+    }
+
+    public void addToGroup(ContactData contact, GroupData group) {
+        selectContactById(contact.getId());
+        new Select(wd.findElement(By.name("to_group"))).selectByVisibleText(group.getGroupName());
+        wd.findElement(By.cssSelector("input[value='Add to']")).click();
+    }
+
+    public void removeFromGroup(GroupData group) {
+        new Select(wd.findElement(By.name("group"))).selectByVisibleText(group.getGroupName());
+        wd.findElement(By.name("selected[]")).click();
+        wd.findElement(By.name("remove")).click();
     }
 
     public List<ContactData> list() {

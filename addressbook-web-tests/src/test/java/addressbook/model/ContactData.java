@@ -101,7 +101,7 @@ public class ContactData {
     @Transient
     private String details;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "address_in_groups",
             joinColumns = @JoinColumn(name = "id"),
             inverseJoinColumns = @JoinColumn(name = "group_id"))

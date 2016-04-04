@@ -43,4 +43,21 @@ public class DbHelper {
 
         return (new Items<>(result));
     }
+
+    public ContactData getContact(int id) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        List<ContactData> contacts = session.createQuery("from ContactData where deprecated = '0000-00-00'").list();
+        for (ContactData contact : contacts) {
+            if (contact.getId() == id) {
+                session.getTransaction().commit();
+                session.close();
+                return contact;
+            }
+        }
+        session.getTransaction().commit();
+        session.close();
+
+        return null;
+    }
 }
