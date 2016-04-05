@@ -7,8 +7,6 @@ import addressbook.tests.TestBase;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.util.stream.Collectors;
-
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -21,6 +19,8 @@ public class ContactGroupTest extends TestBase {
 
     @BeforeMethod
     public void gotoContactPageAndCheckInit() {
+
+        Items<GroupData> beforeAllGroups = app.db().groups();
 
         boolean noSuchGroupName = false;
         while (!noSuchGroupName) {
@@ -35,10 +35,12 @@ public class ContactGroupTest extends TestBase {
                 }
             }
         }
-        group = new GroupData().withName(groupName);
-
         app.goTo().groupPage();
-        app.group().create(group);
+        app.group().create(new GroupData().withName(groupName));
+
+        Items<GroupData> afterAllGroups = app.db().groups();
+        afterAllGroups.removeAll(beforeAllGroups);
+        group = afterAllGroups.iterator().next();
 
         app.goTo().gotoHomePage();
         if (! app.contact().isContactsFound()) {
@@ -59,23 +61,18 @@ public class ContactGroupTest extends TestBase {
     @Test
     public void testContactAddToGroup() {
         Items<GroupData> beforeContactGroups = contact.getGroups();
+        Items<ContactData> beforeGroupContacts = group.getContacts();
         app.contact().addToGroup(contact, group);
 
         Items<GroupData> afterContactGroups = app.db().getContact(contact.getId()).getGroups();
         assertThat(afterContactGroups.size(), equalTo(beforeContactGroups.size() + 1));
 
-        assertThat(afterContactGroups
-                        .stream()
-                        .map((g) -> new GroupData()
-                                .withName(g.getGroupName()))
-                        .collect(Collectors.toSet()),
+        Items<ContactData> afterGroupContacts = app.db().getGroup(group.getId()).getContacts();
+        assertThat(afterGroupContacts.size(), equalTo(beforeGroupContacts.size() + 1));
+
+        assertThat(afterContactGroups,
                 equalTo(beforeContactGroups
-                        .withAdded(new GroupData()
-                                .withName(group.getGroupName()))
-                        .stream()
-                        .map((g) -> new GroupData()
-                                .withName(g.getGroupName()))
-                        .collect(Collectors.toSet())));
+                        .withAdded(group)));
     }
 
     @Test
@@ -83,23 +80,18 @@ public class ContactGroupTest extends TestBase {
         app.contact().addToGroup(contact, group);
         app.goTo().gotoHomePage();
         Items<GroupData> beforeContactGroups = app.db().getContact(contact.getId()).getGroups();
+        Items<ContactData> beforeGroupContacts = app.db().getGroup(group.getId()).getContacts();
 
         app.contact().removeFromGroup(group);
 
         Items<GroupData> afterContactGroups = app.db().getContact(contact.getId()).getGroups();
         assertThat(afterContactGroups.size(), equalTo(beforeContactGroups.size() - 1));
 
-        assertThat(afterContactGroups
-                .withAdded(new GroupData()
-                        .withName(group.getGroupName()))
-                        .stream()
-                        .map((g) -> new GroupData()
-                                .withName(g.getGroupName()))
-                        .collect(Collectors.toSet()),
+        Items<ContactData> afterGroupContacts = app.db().getGroup(group.getId()).getContacts();
+        assertThat(afterGroupContacts.size(), equalTo(beforeGroupContacts.size() - 1));
+
+        assertThat(afterContactGroups,
                 equalTo(beforeContactGroups
-                        .stream()
-                        .map((g) -> new GroupData()
-                                .withName(g.getGroupName()))
-                        .collect(Collectors.toSet())));
+                        .without(group)));
     }
 }

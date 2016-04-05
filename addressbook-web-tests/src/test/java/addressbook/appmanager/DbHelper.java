@@ -44,6 +44,23 @@ public class DbHelper {
         return (new Items<>(result));
     }
 
+    public GroupData getGroup(int id) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        List<GroupData> groups = session.createQuery("from GroupData").list();
+        for (GroupData group : groups) {
+            if (group.getId() == id) {
+                session.getTransaction().commit();
+                session.close();
+                return group;
+            }
+        }
+        session.getTransaction().commit();
+        session.close();
+
+        return null;
+    }
+
     public ContactData getContact(int id) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();

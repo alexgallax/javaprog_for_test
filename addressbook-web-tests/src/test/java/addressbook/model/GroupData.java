@@ -49,6 +49,10 @@ public class GroupData {
         return groupFooter;
     }
 
+    public Items<ContactData> getContacts() {
+        return (new Items<>(contacts));
+    }
+
     public GroupData withId(int id) {
         this.id = id;
         return this;
