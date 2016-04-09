@@ -55,7 +55,6 @@ public class ContactGroupTest extends TestBase {
         }
 
         contact = app.db().contacts().iterator().next();
-
     }
 
     @Test
