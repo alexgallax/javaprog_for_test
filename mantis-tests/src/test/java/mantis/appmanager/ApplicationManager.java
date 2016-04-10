@@ -11,16 +11,19 @@ import java.io.IOException;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
+import static mantis.appmanager.AppConsts.*;
 import static mantis.tests.consts.TestConsts.PROP_FILEPATH;
 import static org.openqa.selenium.remote.BrowserType.*;
 
 public class ApplicationManager {
 
     private final Properties properties;
-
-    WebDriver wd;
-
     private String browser;
+
+    private FtpHelper ftp;
+    private RegistrationHelper registration;
+
+    private WebDriver wd;
 
     public ApplicationManager(String browser) {
         this.browser = browser;
@@ -28,9 +31,21 @@ public class ApplicationManager {
     }
 
     public void init() throws IOException {
-        String target = System.getProperty("target", "local");
+        String target = System.getProperty(TARGET_PROPS, DEFAULT_PROPS);
         properties.load(new FileReader(new File(String.format(PROP_FILEPATH, target))));
+    }
 
+    public void stop() {
+        if (wd != null) {
+            wd.quit();
+        }
+    }
+
+    public String getProperty(String propertyName) {
+        return properties.getProperty(propertyName);
+    }
+
+    public WebDriver getDriver() {
         if (browser.equals(FIREFOX)) {
             wd = new FirefoxDriver();
         } else if (browser.equals(CHROME)) {
@@ -39,18 +54,26 @@ public class ApplicationManager {
             wd = new InternetExplorerDriver();
         }
         wd.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
-        wd.get(properties.getProperty("web.baseUrl"));
-    }
+        wd.get(properties.getProperty(WEB_BASE_URL_PROP));
 
-    public void stop() {
-        wd.quit();
-    }
-
-    public String getProperty(String propertyName) {
-        return properties.getProperty(propertyName);
+        return wd;
     }
 
     public HttpSession newSession() {
         return (new HttpSession(this));
+    }
+
+    public FtpHelper ftp() {
+        if (ftp == null) {
+            ftp = new FtpHelper(this);
+        }
+        return ftp;
+    }
+
+    public RegistrationHelper registration() {
+        if (registration == null) {
+            registration = new RegistrationHelper(this);
+        }
+        return registration;
     }
 }
