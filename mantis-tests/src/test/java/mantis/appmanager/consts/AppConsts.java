@@ -1,4 +1,4 @@
-package mantis.appmanager;
+package mantis.appmanager.consts;
 
 public class AppConsts {
     public static final String TARGET_PROPS = "target";

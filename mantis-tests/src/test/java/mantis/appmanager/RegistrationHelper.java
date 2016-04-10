@@ -2,8 +2,8 @@ package mantis.appmanager;
 
 import org.openqa.selenium.By;
 
-import static mantis.appmanager.AppConsts.SIGNUP_PAGE;
-import static mantis.appmanager.AppConsts.WEB_BASE_URL_PROP;
+import static mantis.appmanager.consts.AppConsts.SIGNUP_PAGE;
+import static mantis.appmanager.consts.AppConsts.WEB_BASE_URL_PROP;
 
 public class RegistrationHelper extends BaseHelper {
 

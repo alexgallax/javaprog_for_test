@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static mantis.appmanager.AppConsts.*;
+import static mantis.appmanager.consts.AppConsts.*;
 
 public class HttpSession {
 

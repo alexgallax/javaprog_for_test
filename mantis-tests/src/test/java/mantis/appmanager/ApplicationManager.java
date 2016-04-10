@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
-import static mantis.appmanager.AppConsts.*;
+import static mantis.appmanager.consts.AppConsts.*;
 import static mantis.tests.consts.TestConsts.PROP_FILEPATH;
 import static org.openqa.selenium.remote.BrowserType.*;
 
@@ -22,6 +22,7 @@ public class ApplicationManager {
 
     private FtpHelper ftp;
     private RegistrationHelper registration;
+    private MailHelper mail;
 
     private WebDriver wd;
 
@@ -75,5 +76,12 @@ public class ApplicationManager {
             registration = new RegistrationHelper(this);
         }
         return registration;
+    }
+
+    public MailHelper mail() {
+        if (mail == null) {
+            mail = new MailHelper(this);
+        }
+        return mail;
     }
 }
