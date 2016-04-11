@@ -20,9 +20,10 @@ public class ApplicationManager {
     private final Properties properties;
     private String browser;
 
-    private FtpHelper ftp;
-    private RegistrationHelper registration;
-    private MailHelper mail;
+    private FtpHelper ftpHelper;
+    private RegistrationHelper registrationHelper;
+    private MailHelper mailHelper;
+    private DbHelper dbHelper;
 
     private WebDriver wd;
 
@@ -65,23 +66,30 @@ public class ApplicationManager {
     }
 
     public FtpHelper ftp() {
-        if (ftp == null) {
-            ftp = new FtpHelper(this);
+        if (ftpHelper == null) {
+            ftpHelper = new FtpHelper(this);
         }
-        return ftp;
+        return ftpHelper;
     }
 
     public RegistrationHelper registration() {
-        if (registration == null) {
-            registration = new RegistrationHelper(this);
+        if (registrationHelper == null) {
+            registrationHelper = new RegistrationHelper(this);
         }
-        return registration;
+        return registrationHelper;
     }
 
     public MailHelper mail() {
-        if (mail == null) {
-            mail = new MailHelper(this);
+        if (mailHelper == null) {
+            mailHelper = new MailHelper(this);
         }
-        return mail;
+        return mailHelper;
+    }
+
+    public DbHelper db() {
+        if (dbHelper == null) {
+            dbHelper = new DbHelper();
+        }
+        return dbHelper;
     }
 }
