@@ -5,23 +5,27 @@ import org.openqa.selenium.By;
 import static mantis.appmanager.consts.AppConsts.SIGNUP_PAGE;
 import static mantis.appmanager.consts.AppConsts.WEB_BASE_URL_PROP;
 
-public class RegistrationHelper extends BaseHelper {
+public class UserHelper extends BaseHelper {
 
-    public RegistrationHelper(ApplicationManager app) {
+    public UserHelper(ApplicationManager app) {
         super(app);
     }
 
-    public void start(String username, String email) {
+    public void login(String username, String password) {
+        super.login(username, password);
+    }
+
+    public void registrate(String username, String email) {
         wd.get(app.getProperty(WEB_BASE_URL_PROP) + SIGNUP_PAGE);
         type(By.name("username"), username);
-        type(By.name("password"), email);
+        type(By.name("email"), email);
         click(By.cssSelector("input[value='Signup']"));
     }
 
-    public void finish(String confirmationLink, String password) {
-        wd.get(confirmationLink);
+    public void setPassword(String link, String password) {
+        wd.get(link);
         type(By.name("password"), password);
         type(By.name("password_confirm"), password);
-        click(By.cssSelector("input[value='Update_User']"));
+        click(By.cssSelector("input[value='Update User']"));
     }
 }

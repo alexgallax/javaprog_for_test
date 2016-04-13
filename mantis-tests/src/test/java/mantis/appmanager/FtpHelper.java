@@ -15,7 +15,7 @@ public class FtpHelper {
 
     public FtpHelper(ApplicationManager app) {
         this.app = app;
-
+        ftp = new FTPClient();
     }
 
     public void upload(File file, String target, String backup) throws IOException {

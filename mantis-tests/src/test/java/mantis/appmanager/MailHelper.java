@@ -22,6 +22,18 @@ public class MailHelper {
         wiser = new Wiser();
     }
 
+    public void start() {
+        wiser.start();
+    }
+
+    public void stop() {
+        wiser.stop();
+    }
+
+    public List<MailMessage> waitForMail(int timeout) {
+        return waitForMail(1, timeout);
+    }
+
     public List<MailMessage> waitForMail(int count, int timeout) {
         long start = System.currentTimeMillis();
 
@@ -52,5 +64,9 @@ public class MailHelper {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public void clear() {
+        wiser.getMessages().clear();
     }
 }

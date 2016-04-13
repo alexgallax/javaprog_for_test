@@ -5,6 +5,8 @@ import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 
+import static mantis.appmanager.consts.AppConsts.*;
+
 public class BaseHelper {
 
     protected final ApplicationManager app;
@@ -67,5 +69,12 @@ public class BaseHelper {
         } catch (NoSuchElementException e) {
             return false;
         }
+    }
+
+    protected void login(String username, String password) {
+        wd.get(app.getProperty(WEB_BASE_URL_PROP) + LOGIN_PAGE);
+        type(By.name("username"), username);
+        type(By.name("password"), password);
+        click(By.cssSelector("input[value='Login']"));
     }
 }

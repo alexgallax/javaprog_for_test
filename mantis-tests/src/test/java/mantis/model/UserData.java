@@ -19,6 +19,10 @@ public class UserData {
     @Column(name = "email")
     private String email;
 
+    public String getUsername() {
+        return username;
+    }
+
     @Override
     public String toString() {
         return "UserData{" +

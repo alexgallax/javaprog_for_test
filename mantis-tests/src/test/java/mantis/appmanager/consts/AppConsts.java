@@ -5,6 +5,9 @@ public class AppConsts {
     public static final String DEFAULT_PROPS = "local";
 
     public static final String WEB_BASE_URL_PROP = "web.baseUrl";
+    public static final String WEB_ADMIN_LOGIN_PROP_NAME = "web.adminLogin";
+    public static final String WEB_ADMIN_PASSWORD_PROP_NAME = "web.adminPassword";
+
     public static final String FTP_HOST_PROP = "ftp.host";
     public static final String FTP_LOGIN_PROP = "ftp.login";
     public static final String FTP_PASSWORD_PROP = "ftp.password";

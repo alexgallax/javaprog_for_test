@@ -1,8 +1,12 @@
 package mantis.tests;
 
 import mantis.appmanager.ApplicationManager;
+import mantis.model.MailMessage;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
+import ru.lanwen.verbalregex.VerbalExpression;
+
+import java.util.List;
 
 import static mantis.tests.consts.TestConsts.DEFAULT_TEST_BROWSER;
 
@@ -19,5 +23,12 @@ public class TestBase {
     @AfterSuite
     public void tearDown() {
         app.stop();
+    }
+
+    public String findLinkInMessage(List<MailMessage> mailMessages) {
+        MailMessage mailMessage = mailMessages.iterator().next();
+        VerbalExpression regex = VerbalExpression.regex().find("http://").nonSpace().oneOrMore().build();
+
+        return regex.getText(mailMessage.text);
     }
 }

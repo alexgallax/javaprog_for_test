@@ -21,7 +21,8 @@ public class ApplicationManager {
     private String browser;
 
     private FtpHelper ftpHelper;
-    private RegistrationHelper registrationHelper;
+    private UserHelper userHelper;
+    private AdminHelper adminHelper;
     private MailHelper mailHelper;
     private DbHelper dbHelper;
 
@@ -48,15 +49,17 @@ public class ApplicationManager {
     }
 
     public WebDriver getDriver() {
-        if (browser.equals(FIREFOX)) {
-            wd = new FirefoxDriver();
-        } else if (browser.equals(CHROME)) {
-            wd = new ChromeDriver();
-        } else if (browser.equals(IE)) {
-            wd = new InternetExplorerDriver();
+        if (wd == null) {
+            if (browser.equals(FIREFOX)) {
+                wd = new FirefoxDriver();
+            } else if (browser.equals(CHROME)) {
+                wd = new ChromeDriver();
+            } else if (browser.equals(IE)) {
+                wd = new InternetExplorerDriver();
+            }
+            wd.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+            wd.get(properties.getProperty(WEB_BASE_URL_PROP));
         }
-        wd.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
-        wd.get(properties.getProperty(WEB_BASE_URL_PROP));
 
         return wd;
     }
@@ -72,11 +75,18 @@ public class ApplicationManager {
         return ftpHelper;
     }
 
-    public RegistrationHelper registration() {
-        if (registrationHelper == null) {
-            registrationHelper = new RegistrationHelper(this);
+    public UserHelper user() {
+        if (userHelper == null) {
+            userHelper = new UserHelper(this);
         }
-        return registrationHelper;
+        return userHelper;
+    }
+
+    public AdminHelper admin() {
+        if (adminHelper == null) {
+            adminHelper = new AdminHelper(this);
+        }
+        return adminHelper;
     }
 
     public MailHelper mail() {
