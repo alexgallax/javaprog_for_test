@@ -5,12 +5,8 @@ import mantis.model.MailMessage;
 import org.testng.SkipException;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.Test;
 import ru.lanwen.verbalregex.VerbalExpression;
 
-import javax.xml.rpc.ServiceException;
-import java.net.MalformedURLException;
-import java.rmi.RemoteException;
 import java.util.List;
 
 import static mantis.tests.consts.TestConsts.DEFAULT_TEST_BROWSER;

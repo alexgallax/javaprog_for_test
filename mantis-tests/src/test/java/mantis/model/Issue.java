@@ -42,4 +42,27 @@ public class Issue {
         this.project = project;
         return this;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Issue issue = (Issue) o;
+
+        if (id != issue.id) return false;
+        if (summary != null ? !summary.equals(issue.summary) : issue.summary != null) return false;
+        if (description != null ? !description.equals(issue.description) : issue.description != null) return false;
+        return project != null ? project.equals(issue.project) : issue.project == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (summary != null ? summary.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (project != null ? project.hashCode() : 0);
+        return result;
+    }
 }

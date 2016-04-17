@@ -12,6 +12,8 @@ public class AppConsts {
     public static final String FTP_LOGIN_PROP = "ftp.login";
     public static final String FTP_PASSWORD_PROP = "ftp.password";
 
+    public static final String MANTIS_SOAP_URL_PROP = "soap.url";
+
     public static final String LOGIN_PAGE = "/login.php";
     public static final String INDEX_PAGE = "/index.php";
     public static final String SIGNUP_PAGE = "/signup_page.php";
