@@ -17,12 +17,21 @@ public class SoapTests extends TestBase {
     private static final String SUMMARY_TEXT = "Test summary";
     private static final String DESCRIPTION_TEXT = "Test description";
 
+    private static final int ISSUE_ID = 000001;
+
     @Test
     public void testGetProjects() throws RemoteException, ServiceException, MalformedURLException {
         Set<Project> projects = app.soap().getProjects();
 
         System.out.println("Number of Projects: " + projects.size());
         System.out.println("Projects:\n" + projects);
+    }
+
+    @Test
+    public void testGetIssue() throws RemoteException, ServiceException, MalformedURLException {
+        Issue issue = app.soap().getIssue(ISSUE_ID);
+
+        System.out.println(issue);
     }
 
     @Test
@@ -38,5 +47,12 @@ public class SoapTests extends TestBase {
 
         assertThat(newIssue.getSummary(), equalTo(createdIssue.getSummary()));
         assertThat(newIssue.getDescription(), equalTo(createdIssue.getDescription()));
+    }
+
+    @Test
+    public void skipTestIfOpenIssue() throws RemoteException, ServiceException, MalformedURLException {
+        skipIfNotFixed(ISSUE_ID);
+
+        testCreateIssue();
     }
 }
