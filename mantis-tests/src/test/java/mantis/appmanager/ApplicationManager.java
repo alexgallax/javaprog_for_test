@@ -25,6 +25,7 @@ public class ApplicationManager {
     private AdminHelper adminHelper;
     private MailHelper mailHelper;
     private DbHelper dbHelper;
+    private SoapHelper soapHelper;
 
     private WebDriver wd;
 
@@ -101,5 +102,12 @@ public class ApplicationManager {
             dbHelper = new DbHelper();
         }
         return dbHelper;
+    }
+
+    public SoapHelper soap() {
+        if (soapHelper == null) {
+            soapHelper = new SoapHelper();
+        }
+        return soapHelper;
     }
 }
