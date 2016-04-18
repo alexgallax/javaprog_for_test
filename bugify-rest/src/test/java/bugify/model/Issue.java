@@ -3,24 +3,25 @@ package bugify.model;
 public class Issue {
 
     private int id;
-    private String summary;
+    private String subject;
     private String description;
-    private String resolution;
+    private String state;
+    private String state_name;
 
     public int getId() {
         return id;
     }
 
-    public String getSummary() {
-        return summary;
+    public String getSubject() {
+        return subject;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public String getResolution() {
-        return resolution;
+    public String getState() {
+        return state;
     }
 
     public Issue withId(int id) {
@@ -28,8 +29,8 @@ public class Issue {
         return this;
     }
 
-    public Issue withSummary(String summary) {
-        this.summary = summary;
+    public Issue withSubject(String subject) {
+        this.subject = subject;
         return this;
     }
 
@@ -38,8 +39,8 @@ public class Issue {
         return this;
     }
 
-    public Issue withResolution(String resolution) {
-        this.resolution = resolution;
+    public Issue withState(String state) {
+        this.state = state;
         return this;
     }
 
@@ -47,9 +48,10 @@ public class Issue {
     public String toString() {
         return "Issue{" +
                 "id=" + id +
-                ", summary='" + summary + '\'' +
+                ", subject='" + subject + '\'' +
                 ", description='" + description + '\'' +
-                ", resolution='" + resolution + '\'' +
+                ", state='" + state + '\'' +
+                ", state_name='" + state_name + '\'' +
                 '}';
     }
 }
