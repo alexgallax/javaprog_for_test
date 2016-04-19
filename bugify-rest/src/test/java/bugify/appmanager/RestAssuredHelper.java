@@ -45,7 +45,7 @@ public class RestAssuredHelper {
         String json = RestAssured.given()
                 .parameter("subject", issue.getSubject())
                 .parameter("description", issue.getDescription())
-                .post(app.getProperty(REST_URL_PROP + "/issues.json"))
+                .post(app.getProperty(REST_URL_PROP) + "/issues.json")
                 .asString();
         JsonElement parsed = new JsonParser().parse(json);
 

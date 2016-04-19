@@ -47,7 +47,7 @@ public class RestHelper {
 
     public int createIssue(Issue issue) throws IOException {
         String json = getExecutor()
-                .execute(Request.Post(app.getProperty(REST_URL_PROP + "/issues.json"))
+                .execute(Request.Post(app.getProperty(REST_URL_PROP) + "/issues.json")
                         .bodyForm(new BasicNameValuePair("subject", issue.getSubject()),
                                 new BasicNameValuePair("description", issue.getDescription())))
                 .returnContent().asString();
