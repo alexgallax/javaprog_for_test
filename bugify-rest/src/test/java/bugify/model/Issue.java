@@ -1,12 +1,15 @@
 package bugify.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Issue {
 
     private int id;
     private String subject;
     private String description;
     private String state;
-    private String state_name;
+    @SerializedName("state_name")
+    private String stateName;
 
     public int getId() {
         return id;
@@ -22,6 +25,10 @@ public class Issue {
 
     public String getState() {
         return state;
+    }
+
+    public String getStateName() {
+        return stateName;
     }
 
     public Issue withId(int id) {
@@ -51,7 +58,7 @@ public class Issue {
                 ", subject='" + subject + '\'' +
                 ", description='" + description + '\'' +
                 ", state='" + state + '\'' +
-                ", state_name='" + state_name + '\'' +
+                ", stateName='" + stateName + '\'' +
                 '}';
     }
 

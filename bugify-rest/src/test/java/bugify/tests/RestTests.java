@@ -14,12 +14,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class RestTests extends TestBase {
 
     @Test
-    public void getIssue() throws IOException {
+    public void testGetIssue() throws IOException {
         app.rest().getIssue(1);
     }
 
     @Test
-    public void createIssue() throws IOException {
+    public void testCreateIssue() throws IOException {
         Set<Issue> beforeIssues = app.rest().getIssues();
         Issue newIssue = new Issue()
                 .withSubject("Test subject")

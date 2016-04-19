@@ -14,18 +14,20 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class RestAssuredTests extends TestBase {
 
+    private static final int ISSUE_ID = 1;
+
     @BeforeClass
     public void init() {
         RestAssured.authentication = RestAssured.basic(app.getProperty(REST_KEY_PROP), "");
     }
 
     @Test
-    public void getIssue() throws IOException {
-        app.restAssured().getIssue(1);
+    public void testGetIssue() throws IOException {
+        app.restAssured().getIssue(ISSUE_ID);
     }
 
     @Test
-    public void createIssue() throws IOException {
+    public void testCreateIssue() throws IOException {
         Set<Issue> beforeIssues = app.restAssured().getIssues();
         Issue newIssue = new Issue()
                 .withSubject("Test subject")
@@ -37,5 +39,12 @@ public class RestAssuredTests extends TestBase {
         beforeIssues.add(newIssue.withId(issueId));
 
         assertThat(afterIssues, equalTo(beforeIssues));
+    }
+
+    @Test
+    public void skipTestIfOpenIssue() throws IOException {
+        skipIfNotFixed(ISSUE_ID);
+
+        testCreateIssue();
     }
 }
