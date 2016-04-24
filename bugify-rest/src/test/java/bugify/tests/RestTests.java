@@ -1,8 +1,6 @@
 package bugify.tests;
 
 import bugify.model.Issue;
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.MatcherAssert;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
